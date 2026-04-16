@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop all oak effect coffee tables and side tables at Uni Merchant Store. Free UK delivery.">
+  <title>Shop All — Uni Merchant Store | Home &amp; Living</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .filter-tab {
+      padding: 9px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--white);
+      color: var(--text);
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background: var(--text);
+      color: var(--white);
+      border-color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">
+  Free UK Delivery on all orders · 30-Day Returns · Quality Guaranteed
+  <a href="#">Shop Now &rarr;</a>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">Uni Merchant</span>
+      <span class="logo-sub">Home &amp; Living</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Shop All</a>
+      <a href="products.html?cat=furniture">Furniture</a>
+      <a href="products.html?cat=shelves">Shelves</a>
+      <a href="products.html?cat=kitchen">Kitchen</a>
+      <a href="products.html?cat=home-decor">Home Decor</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="logo"><span class="logo-main">Uni Merchant</span><span class="logo-sub">Home &amp; Living</span></div>
+    <button class="close-btn" id="closeMenuBtn">&times;</button>
+  </div>
+  <a href="index.html">Home</a>
+  <a href="products.html">Shop All</a>
+  <a href="products.html?cat=furniture">Furniture</a>
+  <a href="products.html?cat=shelves">Shelves</a>
+  <a href="products.html?cat=kitchen">Kitchen</a>
+  <a href="products.html?cat=home-decor">Home Decor</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- Page Banner -->
+<div class="page-banner">
+  <div class="container page-banner-inner">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Shop All</span>
+    </nav>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">All Products</h1>
+    <p style="color:var(--text-muted);max-width:500px;text-align:center">Furniture, shelves, kitchen &amp; home decor. Free UK delivery on all orders.</p>
+  </div>
+</div>
+
+<!-- Shop Layout -->
+<div class="container">
+  <div class="shop-layout">
+
+    <!-- Sidebar -->
+    <aside class="filters-sidebar">
+      <h3>Filters</h3>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Category</div>
+        <label class="filter-option"><input type="checkbox" checked> <label>All Products</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>Furniture</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>Shelves</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>Kitchen</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>Home Decor</label></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Price Range</div>
+        <label class="filter-option"><input type="checkbox"> <label>Under £50</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>£50 – £80</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>£80 – £120</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>Over £120</label></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Finish</div>
+        <label class="filter-option"><input type="checkbox" checked> <label>Oak Effect</label></label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-title">Status</div>
+        <label class="filter-option"><input type="checkbox"> <label>On Sale</label></label>
+        <label class="filter-option"><input type="checkbox"> <label>New Arrivals</label></label>
+      </div>
+
+      <div style="margin-top:8px;padding:20px;background:var(--cream);border-radius:var(--radius);">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;color:var(--oak)">Free Delivery</div>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7">Every order ships free within the UK. No minimum spend required.</p>
+      </div>
+    </aside>
+
+    <!-- Products -->
+    <div>
+      <div class="shop-header">
+        <div>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-category="all">All (15)</button>
+            <button class="filter-tab" data-category="furniture">Furniture (6)</button>
+            <button class="filter-tab" data-category="shelves">Shelves (3)</button>
+            <button class="filter-tab" data-category="kitchen">Kitchen (3)</button>
+            <button class="filter-tab" data-category="home-decor">Home Decor (3)</button>
+          </div>
+          <div class="shop-count" id="productCount">Showing 15 products</div>
+        </div>
+        <div>
+          <select id="sortSelect" style="padding:10px 16px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;outline:none;cursor:pointer;background:var(--white);">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Best Rated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Newsletter -->
+<section class="section newsletter">
+  <div class="container">
+    <span class="label" style="color:var(--oak-light);display:block;margin-bottom:12px;">Stay in the Loop</span>
+    <h2>Join Our Community</h2>
+    <p>Sign up for exclusive deals, interior design tips and early access to new arrivals.</p>
+    <form id="newsletterForm" class="newsletter-form">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-main">Uni Merchant</span>
+          <span class="logo-sub">Home &amp; Living</span>
+        </div>
+        <p class="footer-tagline">Contemporary oak effect furniture designed for the modern British home.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=furniture">Furniture</a></li>
+          <li><a href="products.html?cat=shelves">Shelves</a></li>
+          <li><a href="products.html?cat=kitchen">Kitchen</a></li>
+          <li><a href="products.html?cat=home-decor">Home Decor</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul class="footer-links">
+          <li><a href="#">Delivery Information</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Uni Merchant Store · unimerchant.store</span>
+      <div class="payment-icons">
+        <div class="payment-icon">VISA</div>
+        <div class="payment-icon">MC</div>
+        <div class="payment-icon">PayPal</div>
+        <div class="payment-icon">Apple</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-sidebar-header">
+    <h3>Your Cart</h3>
+    <button class="close-btn" id="closeCartBtn">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span class="label-text">Subtotal</span>
+      <span class="price" id="cartSubtotal">£0.00</span>
+    </div>
+    <p class="cart-note">Free UK delivery on all orders.</p>
+    
+    <button class="btn btn-oak" onclick="openCheckoutModal()" style="width:100%;padding:16px;font-size:13px;border-radius:var(--radius);cursor:pointer;">Checkout <a href="cart.html" class="btn btn-oak">Checkout &rarr;</a>rarr;</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span class="toast-msg"></span>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/447438536580" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" width="28" height="28"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#fff" stroke-width="0" fill-rule="evenodd"/></svg>
+</a>
+<script src="assets/js/main.js"></script>
+<script>
+  // Pre-filter by URL param
+  window.addEventListener('load', () => {
+    const cat = new URLSearchParams(location.search).get('cat');
+    if (cat) {
+      const tab = document.querySelector(`.filter-tab[data-category="${cat}"]`);
+      if (tab) tab.click();
+    }
+  });
+</script>
+</body>
+</html>

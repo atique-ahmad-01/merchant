@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Uni Merchant Store — Home & Living. Shop furniture, shelves, kitchen essentials and home decor. Free UK delivery.">
+  <title>Uni Merchant Store — Home & Living</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">
+  Free UK Delivery on all orders · 30-Day Returns · Quality Guaranteed
+  <a href="products.html">Shop Now &rarr;</a>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">Uni Merchant</span>
+      <span class="logo-sub">Home &amp; Living</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="products.html">Shop All</a>
+      <a href="products.html?cat=furniture">Furniture</a>
+      <a href="products.html?cat=shelves">Shelves</a>
+      <a href="products.html?cat=kitchen">Kitchen</a>
+      <a href="products.html?cat=home-decor">Home Decor</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menuBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="logo">
+      <span class="logo-main">Uni Merchant</span>
+      <span class="logo-sub">Home &amp; Living</span>
+    </div>
+    <button class="close-btn" id="closeMenuBtn">&times;</button>
+  </div>
+  <a href="index.html">Home</a>
+  <a href="products.html">Shop All</a>
+  <a href="products.html?cat=furniture">Furniture</a>
+  <a href="products.html?cat=shelves">Shelves</a>
+  <a href="products.html?cat=kitchen">Kitchen</a>
+  <a href="products.html?cat=home-decor">Home Decor</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container" style="display:contents;">
+    <div class="hero-content" style="padding-left:max(24px, calc((100vw - 1240px)/2 + 24px))">
+      <span class="label hero-eyebrow">New Arrivals 2025</span>
+      <h1 class="hero-title">Your Home,<br>Your Style</h1>
+      <p class="hero-desc">
+        Furniture, shelves, kitchen essentials and home decor — everything you need to make your home feel beautiful. Curated for modern living, delivered free to your door.
+      </p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary">Shop All Products</a>
+        <a href="about.html" class="btn btn-outline">Our Story</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <span class="trust-num">1k+</span>
+          <span class="trust-label">5-Star Reviews</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">Free</span>
+          <span class="trust-label">UK Delivery</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">30</span>
+          <span class="trust-label">Day Returns</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img
+        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85"
+        alt="Beautiful modern living room"
+        fetchpriority="high"
+      >
+      <div class="hero-image-badge">
+        <div class="price">From £18.99</div>
+        <div class="name">Home &amp; Living Collection</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Strip -->
+<div class="features-strip">
+  <div class="container">
+    <div class="feature-item">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Free UK Delivery
+    </div>
+    <div class="feature-item">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Quick Dispatch
+    </div>
+    <div class="feature-item">
+      <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      30-Day Returns
+    </div>
+    <div class="feature-item">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Quality Guaranteed
+    </div>
+    <div class="feature-item">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.15 6.15l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Expert Support
+    </div>
+  </div>
+</div>
+
+<!-- Featured Products — one per category -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="label">Handpicked for You</span>
+      <h2>Shop the Collection</h2>
+      <p>From statement furniture to finishing touches — everything curated to help you create a home you love.</p>
+    </div>
+    <div class="product-grid" id="featuredGrid">
+      <!-- Rendered by JS: one product per category -->
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="products.html" class="btn btn-ghost">View All 15 Products &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- Category Showcase -->
+<section class="section categories">
+  <div class="container">
+    <div class="section-heading">
+      <span class="label">Browse by Category</span>
+      <h2>Everything for the Home</h2>
+      <p>Four curated categories covering every corner of your home — from living room to kitchen.</p>
+    </div>
+    <div class="category-grid" style="grid-template-columns:repeat(4,1fr);">
+      <a href="products.html?cat=furniture" class="category-card" style="aspect-ratio:3/4;">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Furniture" loading="lazy">
+        <div class="category-overlay">
+          <h3>Furniture</h3>
+          <span>6 products</span>
+          <span class="category-btn">Shop <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </div>
+      </a>
+      <a href="products.html?cat=shelves" class="category-card" style="aspect-ratio:3/4;">
+        <img src="https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=600&q=80" alt="Shelves" loading="lazy">
+        <div class="category-overlay">
+          <h3>Shelves</h3>
+          <span>3 products</span>
+          <span class="category-btn">Shop <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </div>
+      </a>
+      <a href="products.html?cat=kitchen" class="category-card" style="aspect-ratio:3/4;">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kitchen" loading="lazy">
+        <div class="category-overlay">
+          <h3>Kitchen</h3>
+          <span>3 products</span>
+          <span class="category-btn">Shop <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </div>
+      </a>
+      <a href="products.html?cat=home-decor" class="category-card" style="aspect-ratio:3/4;">
+        <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&q=80" alt="Home Decor" loading="lazy">
+        <div class="category-overlay">
+          <h3>Home Decor</h3>
+          <span>3 products</span>
+          <span class="category-btn">Shop <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Highlight -->
+<section class="feature-highlight">
+  <div class="feature-highlight-image">
+    <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1000&q=85" alt="Beautiful home decor" loading="lazy">
+  </div>
+  <div class="feature-highlight-content">
+    <span class="label">Why Shop With Us</span>
+    <h2>Curated for<br>Modern Living</h2>
+    <p>
+      At Uni Merchant Store we pick every product with the same standard: great design, honest quality, and a fair price. Whether you're furnishing a room or adding the finishing touches, we have you covered.
+    </p>
+    <ul class="feature-list">
+      <li>Furniture, shelves, kitchen &amp; decor all in one place</li>
+      <li>Carefully selected products that work together beautifully</li>
+      <li>Free UK delivery — no minimum spend</li>
+      <li>Easy 30-day returns, no questions asked</li>
+      <li>Friendly customer support 7 days a week</li>
+    </ul>
+    <a href="products.html" class="btn btn-oak">Explore the Range</a>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="section-heading">
+      <span class="label">Customer Reviews</span>
+      <h2>Loved by Our Customers</h2>
+      <p>Over 1,000 five-star reviews from happy homes across the UK.</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Ordered the ceramic vase set and the floating shelves together — they look incredible in my hallway. Everything arrived well-packaged and super quickly. Will definitely order again."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah M." loading="lazy">
+          </div>
+          <div>
+            <div class="author-name">Sarah M.</div>
+            <div class="author-location">Manchester, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The marble canister set is stunning — looks like it cost three times what I paid. The kitchen organiser is really practical too. Great quality across the board, fast delivery."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="James T." loading="lazy">
+          </div>
+          <div>
+            <div class="author-name">James T.</div>
+            <div class="author-location">London, UK</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The industrial bookshelf is exactly what I was looking for — solid, stylish and really easy to assemble. The scented candle I added to my order smells amazing too. Love this store!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Priya K." loading="lazy">
+          </div>
+          <div>
+            <div class="author-name">Priya K.</div>
+            <div class="author-location">Birmingham, UK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="section newsletter">
+  <div class="container">
+    <span class="label" style="color:var(--oak-light);display:block;margin-bottom:12px;">Stay in the Loop</span>
+    <h2>Join Our Community</h2>
+    <p>Exclusive deals, interior styling tips and first access to new arrivals — straight to your inbox.</p>
+    <form id="newsletterForm" class="newsletter-form">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-main">Uni Merchant</span>
+          <span class="logo-sub">Home &amp; Living</span>
+        </div>
+        <p class="footer-tagline">Furniture, shelves, kitchen essentials and home decor — everything to make your home beautiful.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.087-.791-.166-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.853 0 1.267.641 1.267 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.772 0 3.138-1.867 3.138-4.562 0-2.386-1.714-4.052-4.163-4.052-2.836 0-4.5 2.127-4.5 4.327 0 .857.33 1.775.741 2.276a.3.3 0 0 1 .069.283c-.076.313-.244.995-.277 1.134-.044.183-.146.222-.337.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.33a8.16 8.16 0 0 0 4.77 1.52V7.41a4.85 4.85 0 0 1-1-.72z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=furniture">Furniture</a></li>
+          <li><a href="products.html?cat=shelves">Shelves</a></li>
+          <li><a href="products.html?cat=kitchen">Kitchen</a></li>
+          <li><a href="products.html?cat=home-decor">Home Decor</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul class="footer-links">
+          <li><a href="#">Delivery Information</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">Assembly Guides</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Uni Merchant Store · unimerchant.store · All rights reserved.</span>
+      <div class="payment-icons">
+        <div class="payment-icon">VISA</div>
+        <div class="payment-icon">MC</div>
+        <div class="payment-icon">AMEX</div>
+        <div class="payment-icon">PayPal</div>
+        <div class="payment-icon">Apple</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-sidebar-header">
+    <h3>Your Cart</h3>
+    <button class="close-btn" id="closeCartBtn">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter">
+    <div class="cart-subtotal">
+      <span class="label-text">Subtotal</span>
+      <span class="price" id="cartSubtotal">£0.00</span>
+    </div>
+    <p class="cart-note">Shipping calculated at checkout. Free UK delivery on all orders.</p>
+    
+    <button class="btn btn-oak" onclick="openCheckoutModal()" style="width:100%;padding:16px;font-size:13px;border-radius:var(--radius);cursor:pointer;">Checkout <a href="cart.html" class="btn btn-oak">Checkout &rarr;</a>rarr;</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span class="toast-msg"></span>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/447438536580" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" width="28" height="28"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#fff" stroke-width="0" fill-rule="evenodd"/></svg>
+</a>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

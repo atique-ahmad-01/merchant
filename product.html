@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Uni Merchant Store</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .product-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+    .product-tab {
+      padding: 14px 28px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: var(--transition);
+      color: var(--text-muted);
+      background: none;
+    }
+    .product-tab:hover { color: var(--text); }
+    .product-tab.active { color: var(--oak); border-bottom-color: var(--oak); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .related-section { background: var(--bg-alt); }
+  </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">
+  Free UK Delivery on all orders · 30-Day Returns · Quality Guaranteed
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">Uni Merchant</span>
+      <span class="logo-sub">Home &amp; Living</span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Shop</a>
+      <a href="products.html?cat=furniture">Furniture</a>
+      <a href="products.html?cat=shelves">Shelves</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="logo"><span class="logo-main">Uni Merchant</span><span class="logo-sub">Home &amp; Living</span></div>
+    <button class="close-btn" id="closeMenuBtn">&times;</button>
+  </div>
+  <a href="index.html">Home</a>
+  <a href="products.html">Shop All</a>
+  <a href="products.html?cat=furniture">Furniture</a>
+  <a href="products.html?cat=shelves">Shelves</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- Breadcrumb -->
+<div style="background:var(--bg-alt);padding:16px 0;border-bottom:1px solid var(--border);">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="products.html">Shop</a>
+      <span>/</span>
+      <span id="pdBreadcrumb">Product</span>
+    </nav>
+  </div>
+</div>
+
+<!-- Product Detail -->
+<div class="container product-detail" id="productDetail">
+  <div class="product-detail-grid">
+
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="gallery-main">
+        <img id="galleryMain" src="" alt="Product image">
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      <div class="product-detail-vendor" id="pdVendor">Homme Concept</div>
+      <h1 class="product-detail-title" id="pdTitle">Loading…</h1>
+      <div class="product-stars" id="pdStars" style="font-size:15px;margin-bottom:4px;"></div>
+
+      <div class="product-detail-price" id="pdPrice"></div>
+
+      <p class="product-detail-desc" id="pdDesc"></p>
+
+      <!-- Variant -->
+      <div class="option-group">
+        <label>Finish</label>
+        <div class="option-swatches">
+          <div class="swatch active">Oak Effect</div>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="option-group">
+        <label>Quantity</label>
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <input type="number" id="qtyInput" value="1" min="1" max="99" class="qty-input">
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="product-detail-actions">
+        <button class="btn btn-primary" id="pdAddCart">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Add to Cart
+        </button>
+        <button class="btn btn-outline" onclick="showToast('Added to wishlist')">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="product-trust">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Free UK Delivery
+        </div>
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          30-Day Returns
+        </div>
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Quality Guarantee
+        </div>
+      </div>
+
+      <!-- Specs -->
+      <div class="product-specs">
+        <div class="product-specs-title">Product Specifications</div>
+        <div id="pdSpecs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div style="margin-top:64px;">
+    <div class="product-tabs">
+      <button class="product-tab active" onclick="switchTab(this,'tabDesc')">Description</button>
+      <button class="product-tab" onclick="switchTab(this,'tabFeatures')">Features</button>
+      <button class="product-tab" onclick="switchTab(this,'tabDelivery')">Delivery & Returns</button>
+    </div>
+    <div class="tab-content active" id="tabDesc">
+      <p id="pdDescLong" style="color:var(--text-muted);line-height:1.9;max-width:700px;font-size:14px;"></p>
+    </div>
+    <div class="tab-content" id="tabFeatures">
+      <ul id="pdFeatures" class="feature-list" style="max-width:600px;"></ul>
+    </div>
+    <div class="tab-content" id="tabDelivery">
+      <div style="max-width:600px;font-size:14px;color:var(--text-muted);line-height:1.9;">
+        <h4 style="color:var(--text);margin-bottom:12px;">Delivery Information</h4>
+        <ul class="feature-list" style="margin-bottom:28px;">
+          <li>Free standard UK delivery on all orders</li>
+          <li>Dispatched within 1–2 business days</li>
+          <li>Delivered within 3–5 business days</li>
+          <li>Tracked shipping with SMS/email updates</li>
+        </ul>
+        <h4 style="color:var(--text);margin-bottom:12px;">Returns Policy</h4>
+        <ul class="feature-list">
+          <li>30-day hassle-free returns</li>
+          <li>Items must be unused and in original packaging</li>
+          <li>Free returns for damaged or faulty items</li>
+          <li>Refund processed within 5–7 business days</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Related Products -->
+<section class="section related-section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="label">You May Also Like</span>
+      <h2>Related Products</h2>
+    </div>
+    <div class="product-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-main">Uni Merchant</span>
+          <span class="logo-sub">Home &amp; Living</span>
+        </div>
+        <p class="footer-tagline">Contemporary oak effect furniture for the modern British home.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=furniture">Furniture</a></li>
+          <li><a href="products.html?cat=shelves">Shelves</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul class="footer-links">
+          <li><a href="#">Delivery</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Uni Merchant Store · unimerchant.store</span>
+      <div class="payment-icons">
+        <div class="payment-icon">VISA</div>
+        <div class="payment-icon">MC</div>
+        <div class="payment-icon">PayPal</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-sidebar-header">
+    <h3>Your Cart</h3>
+    <button class="close-btn" id="closeCartBtn">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span class="label-text">Subtotal</span>
+      <span class="price" id="cartSubtotal">£0.00</span>
+    </div>
+    <p class="cart-note">Free UK delivery on all orders.</p>
+    
+    <button class="btn btn-oak" onclick="openCheckoutModal()" style="width:100%;padding:16px;font-size:13px;border-radius:var(--radius);cursor:pointer;">Checkout <a href="cart.html" class="btn btn-oak">Checkout &rarr;</a>rarr;</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span class="toast-msg"></span>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/447438536580" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" width="28" height="28"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#fff" stroke-width="0" fill-rule="evenodd"/></svg>
+</a>
+<script src="assets/js/main.js"></script>
+<script>
+  // Sync breadcrumb and desc long
+  window.addEventListener('load', () => {
+    const title = document.getElementById('pdTitle');
+    if (title) document.getElementById('pdBreadcrumb').textContent = title.textContent.substring(0, 30) + '…';
+    const descLong = document.getElementById('pdDescLong');
+    const desc = document.getElementById('pdDesc');
+    if (descLong && desc) descLong.textContent = desc.textContent;
+  });
+
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.product-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+</body>
+</html>
