@@ -480,8 +480,8 @@ const STORE = {
   name:      'Uni Merchant Store',
   email:     'hello@unimerchant.store',
   whatsapp:  '447787675032',          // international format, no +
-  // Stripe — add your Live Publishable Key (pk_live_...) from stripe.com/dashboard
-  stripePublishableKey: 'YOUR_STRIPE_PUBLISHABLE_KEY',
+  // PayPal — sign up at developer.paypal.com, create a REST app, copy the Client ID:
+  paypalClientId: 'AeDcIQYGVamPwHG89DZH5RgzIJDNRypIoGY4q6Dnv0G1UaT8vpHgyYnrwLa60sOSf6nw52TlVFL61OVV',
   // EmailJS credentials — sign up free at emailjs.com and replace these:
   emailjs: {
     publicKey:  'YOUR_EMAILJS_PUBLIC_KEY',   // Account > API Keys
@@ -728,17 +728,13 @@ function buildCheckoutModal() {
           Place Order via WhatsApp
         </button>
 
-        <!-- Stripe divider + card payment -->
+        <!-- PayPal divider + button -->
         <div style="display:flex;align-items:center;gap:12px;margin:20px 0 16px;">
           <div style="flex:1;height:1px;background:var(--border);"></div>
-          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">or pay by card</span>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">or pay with</span>
           <div style="flex:1;height:1px;background:var(--border);"></div>
         </div>
-        <div id="stripe-payment-element" style="margin-bottom:12px;"></div>
-        <div id="stripe-error" style="color:#e53e3e;font-size:13px;margin-bottom:12px;min-height:18px;"></div>
-        <button id="stripe-pay-btn" type="button" style="display:none;width:100%;padding:15px;background:#635bff;color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.04em;transition:opacity .2s;">
-          Pay with Card
-        </button>
+        <div id="paypal-button-container" style="min-height:48px;"></div>
 
         <p class="checkout-note">
           Your order details will be sent to our WhatsApp and email.<br>
@@ -769,131 +765,69 @@ function buildCheckoutModal() {
   document.getElementById('coSubmitBtn').addEventListener('click', submitOrder);
 }
 
-function loadStripe() {
-  const pubKey = STORE.stripePublishableKey;
-  if (!pubKey || pubKey === 'YOUR_STRIPE_PUBLISHABLE_KEY') return;
+function loadPayPal() {
+  const clientId = STORE.paypalClientId;
+  if (!clientId || clientId === 'YOUR_PAYPAL_CLIENT_ID') return;
 
-  if (!window.Stripe) {
-    const script = document.createElement('script');
-    script.id = 'stripe-js';
-    script.src = 'https://js.stripe.com/v3/';
-    script.onload = initStripePayment;
-    document.head.appendChild(script);
-  } else {
-    initStripePayment();
-  }
-}
-
-async function initStripePayment() {
-  const container = document.getElementById('stripe-payment-element');
+  // Remove any previously rendered PayPal buttons (cart may have changed)
+  const container = document.getElementById('paypal-button-container');
   if (!container) return;
-  container.innerHTML = '<div style="font-size:13px;color:var(--text-muted);padding:12px 0;">Loading payment form…</div>';
+  container.innerHTML = '';
 
-  try {
-    // Create PaymentIntent via Netlify serverless function
-    const res = await fetch('/.netlify/functions/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: cartTotal() })
-    });
-    const data = await res.json();
-    if (!data.clientSecret) throw new Error(data.error || 'Could not initialise payment');
-
-    const stripe = window.Stripe(STORE.stripePublishableKey);
-    const elements = stripe.elements({ clientSecret: data.clientSecret, appearance: {
-      theme: 'stripe',
-      variables: { colorPrimary: '#8B6B3D', borderRadius: '8px', fontFamily: 'inherit' }
-    }});
-
-    const paymentEl = elements.create('payment', { layout: 'tabs' });
-    container.innerHTML = '';
-    paymentEl.mount('#stripe-payment-element');
-
-    // Show pay button once element is ready
-    paymentEl.on('ready', () => {
-      const btn = document.getElementById('stripe-pay-btn');
-      if (btn) {
-        btn.style.display = 'block';
-        btn.textContent = `Pay £${cartTotal().toFixed(2)}`;
+  // Load SDK once
+  const sdkId = 'paypal-sdk';
+  const existing = document.getElementById(sdkId);
+  const renderButtons = () => {
+    if (!window.paypal) return;
+    window.paypal.Buttons({
+      style: { layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
+      createOrder(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: cartTotal().toFixed(2), currency_code: 'GBP' },
+            description: `Uni Merchant Store Order`
+          }]
+        });
+      },
+      onApprove(data, actions) {
+        return actions.order.capture().then(() => {
+          if (!validateCheckoutForm()) {
+            showToast('Please fill in your delivery details above');
+            return;
+          }
+          const customer = {
+            name:     document.getElementById('coName').value.trim(),
+            email:    document.getElementById('coEmail').value.trim(),
+            phone:    document.getElementById('coPhone').value.trim(),
+            address:  document.getElementById('coAddress').value.trim(),
+            city:     document.getElementById('coCity').value.trim(),
+            postcode: document.getElementById('coPostcode').value.trim(),
+            notes:    document.getElementById('coNotes').value.trim()
+          };
+          const msg = formatOrderMessage(customer);
+          window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
+          cart = [];
+          saveCart();
+          document.getElementById('checkoutFormView').style.display = 'none';
+          document.getElementById('checkoutSuccess').classList.add('show');
+        });
+      },
+      onError(err) {
+        console.error('PayPal error', err);
+        showToast('PayPal payment failed — please try WhatsApp or try again');
       }
-    });
-
-    // Store for use in payment handler
-    window._stripe  = stripe;
-    window._stripeElements = elements;
-
-  } catch (err) {
-    container.innerHTML = '';
-    document.getElementById('stripe-error').textContent =
-      'Card payment unavailable — please use the WhatsApp button above.';
-    console.warn('Stripe init error:', err);
-  }
-}
-
-async function handleStripePayment() {
-  if (!validateCheckoutForm()) {
-    showToast('Please fill in all required fields first');
-    return;
-  }
-
-  const stripe   = window._stripe;
-  const elements = window._stripeElements;
-  if (!stripe || !elements) return;
-
-  const payBtn = document.getElementById('stripe-pay-btn');
-  payBtn.disabled = true;
-  payBtn.style.opacity = '0.6';
-  payBtn.textContent = 'Processing…';
-
-  const customer = {
-    name:     document.getElementById('coName').value.trim(),
-    email:    document.getElementById('coEmail').value.trim(),
-    phone:    document.getElementById('coPhone').value.trim(),
-    address:  document.getElementById('coAddress').value.trim(),
-    city:     document.getElementById('coCity').value.trim(),
-    postcode: document.getElementById('coPostcode').value.trim(),
-    notes:    document.getElementById('coNotes').value.trim()
+    }).render('#paypal-button-container');
   };
 
-  // Save to sessionStorage in case of 3DS redirect
-  sessionStorage.setItem('um_pending_order', JSON.stringify({ customer, cart: [...cart] }));
-
-  const { error } = await stripe.confirmPayment({
-    elements,
-    confirmParams: {
-      return_url: window.location.origin + window.location.pathname + '?payment=success',
-      payment_method_data: {
-        billing_details: {
-          name:    customer.name,
-          email:   customer.email,
-          phone:   customer.phone,
-          address: { line1: customer.address, city: customer.city, postal_code: customer.postcode, country: 'GB' }
-        }
-      }
-    },
-    redirect: 'if_required'
-  });
-
-  if (error) {
-    document.getElementById('stripe-error').textContent = error.message;
-    payBtn.disabled = false;
-    payBtn.style.opacity = '1';
-    payBtn.textContent = `Pay £${cartTotal().toFixed(2)}`;
-    sessionStorage.removeItem('um_pending_order');
+  if (existing) {
+    renderButtons();
   } else {
-    completeOrder(customer);
+    const script = document.createElement('script');
+    script.id = sdkId;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=GBP&intent=capture`;
+    script.onload = renderButtons;
+    document.head.appendChild(script);
   }
-}
-
-function completeOrder(customer) {
-  const msg = formatOrderMessage(customer);
-  // Send full order details to WhatsApp
-  window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
-  cart = [];
-  saveCart();
-  sessionStorage.removeItem('um_pending_order');
-  document.getElementById('checkoutFormView').style.display = 'none';
-  document.getElementById('checkoutSuccess').classList.add('show');
 }
 
 function openCheckoutModal() {
@@ -921,10 +855,8 @@ function openCheckoutModal() {
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Wire up Stripe pay button and load Stripe (no-op if key not configured)
-  const stripePayBtn = document.getElementById('stripe-pay-btn');
-  if (stripePayBtn) stripePayBtn.addEventListener('click', handleStripePayment);
-  loadStripe();
+  // Load PayPal button (no-op if client ID not configured)
+  loadPayPal();
 }
 
 function closeCheckoutModal() {
@@ -1051,22 +983,6 @@ async function submitOrder() {
 /* ── DOM Ready ── */
 document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
-
-  // Handle Stripe 3DS redirect return
-  if (new URLSearchParams(location.search).get('payment') === 'success') {
-    const pending = sessionStorage.getItem('um_pending_order');
-    if (pending) {
-      const { customer, cart: savedCart } = JSON.parse(pending);
-      cart = savedCart;
-      completeOrder(customer);
-      // Show success modal
-      buildCheckoutModal();
-      document.getElementById('checkoutOverlay').classList.add('open');
-      document.getElementById('checkoutFormView').style.display = 'none';
-      document.getElementById('checkoutSuccess').classList.add('show');
-    }
-    history.replaceState({}, '', location.pathname);
-  }
 
   /* Cart open/close */
   document.getElementById('cartBtn')?.addEventListener('click', openCart);
