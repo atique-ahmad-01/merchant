@@ -722,23 +722,32 @@ function buildCheckoutModal() {
           </div>
         </div>
 
-        <!-- Submit -->
-        <button class="checkout-submit-btn" id="coSubmitBtn" type="button">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-          Place Order via WhatsApp
-        </button>
+        <!-- Payment options -->
+        <div class="checkout-section-title">Payment Method</div>
 
-        <!-- PayPal divider + button -->
-        <div style="display:flex;align-items:center;gap:12px;margin:20px 0 16px;">
-          <div style="flex:1;height:1px;background:var(--border);"></div>
-          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">or pay with</span>
-          <div style="flex:1;height:1px;background:var(--border);"></div>
+        <!-- Option 1: PayPal -->
+        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;color:var(--text);">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Pay Now — PayPal
+          </div>
+          <div id="paypal-button-container" style="min-height:44px;"></div>
         </div>
-        <div id="paypal-button-container" style="min-height:48px;"></div>
+
+        <!-- Option 2: Cash on Delivery -->
+        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;color:var(--text);">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Cash on Delivery
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Pay in cash when your order arrives.</div>
+          <button class="checkout-submit-btn" id="coSubmitBtn" type="button" style="font-size:12px;padding:13px 20px;">
+            Place Order (Pay on Delivery)
+          </button>
+        </div>
 
         <p class="checkout-note">
-          Your order details will be sent to our WhatsApp and email.<br>
-          We will confirm your order and delivery within 2 hours.
+          Your order details will be sent to our WhatsApp. We'll confirm delivery within 2 hours.
         </p>
       </div>
 
@@ -747,8 +756,8 @@ function buildCheckoutModal() {
         <div class="success-icon">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h2>Order Sent!</h2>
-        <p>Your order has been sent to our WhatsApp and email.</p>
+        <h2>Order Placed!</h2>
+        <p>Your order has been sent to our WhatsApp.</p>
         <p>We'll confirm your order and delivery details within <strong>2 hours</strong>.</p>
         <p style="margin-top:8px;">Questions? Message us on WhatsApp: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
         <button class="btn btn-oak" style="margin-top:28px;" onclick="closeCheckoutModal()">Continue Shopping</button>
@@ -761,7 +770,7 @@ function buildCheckoutModal() {
   document.getElementById('closeCheckout').addEventListener('click', closeCheckoutModal);
   el.addEventListener('click', (e) => { if (e.target === el) closeCheckoutModal(); });
 
-  // Submit
+  // Cash on Delivery submit
   document.getElementById('coSubmitBtn').addEventListener('click', submitOrder);
 }
 
@@ -804,7 +813,7 @@ function loadPayPal() {
             postcode: document.getElementById('coPostcode').value.trim(),
             notes:    document.getElementById('coNotes').value.trim()
           };
-          const msg = formatOrderMessage(customer);
+          const msg = formatOrderMessage(customer, 'PayPal ✅ Paid');
           window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
           cart = [];
           saveCart();
@@ -877,9 +886,10 @@ function validateCheckoutForm() {
   return valid;
 }
 
-function formatOrderMessage(customer) {
+function formatOrderMessage(customer, paymentMethod) {
   const orderRef = 'UM' + Date.now().toString().slice(-6);
   const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+  const payment = paymentMethod || 'Cash on Delivery';
 
   let lines = cart.map(i =>
     `• [#${i.itemNo}] ${i.name} (${i.variant}) × ${i.qty} — £${(i.price * i.qty).toFixed(2)}`
@@ -891,6 +901,7 @@ function formatOrderMessage(customer) {
 `🛒 *New Order — ${STORE.name}*
 📋 Ref: ${orderRef}
 📅 ${date}
+💳 *Payment: ${payment}*
 
 👤 *Customer Details*
 Name: ${customer.name}
@@ -947,7 +958,7 @@ async function submitOrder() {
     notes:    document.getElementById('coNotes').value.trim()
   };
 
-  const msg = formatOrderMessage(customer);
+  const msg = formatOrderMessage(customer, 'Cash on Delivery 💵');
 
   // 1. Send email via EmailJS (if configured)
   const ejsKey = STORE.emailjs.publicKey;
