@@ -4,367 +4,475 @@
 
 /* ── Product Data ── */
 const PRODUCTS = [
-  /* ── Coffee Tables ── */
+  /* ── Bathroom ── */
   {
     id: 1,
-    name: "Oval Coffee Table with Lower Shelf",
-    vendor: "Homme Concept",
-    slug: "oval-coffee-table-lower-shelf",
-    price: 89.99,
-    originalPrice: 119.99,
-    badge: "sale",
-    rating: 4.8,
-    reviews: 124,
-    category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
-      "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80",
-      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80"
-    ],
-    description: "Elevate your living space with this contemporary oval coffee table. Featuring an elegant oak effect finish and a practical lower shelf for extra storage, it seamlessly blends minimalist design with everyday functionality.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Shape": "Oval", "Dimensions": "110 × 60 × 45 cm", "Weight Capacity": "30 kg", "Assembly": "Self-assembly (tools included)" },
-    features: ["Contemporary oval design suits any living room", "Lower shelf provides stylish extra storage", "Durable oak effect finish, easy to clean", "Sturdy construction with solid legs", "Quick and easy self-assembly"]
-  },
-  {
-    id: 2,
-    name: "Round Coffee Table with Lower Shelf",
-    vendor: "Homme Concept",
-    slug: "round-coffee-table-lower-shelf",
-    price: 79.99,
+    itemNo: "061",
+    name: "Free Standing White Toilet Roll Holder Cabinet",
+    vendor: "Uni Merchant",
+    slug: "white-toilet-roll-holder-cabinet",
+    price: 19,
     originalPrice: null,
     badge: "new",
     rating: 4.7,
-    reviews: 87,
-    category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
-      "https://images.unsplash.com/photo-1549497538-303791108f95?w=800&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
-    ],
-    description: "A timeless round coffee table in warm oak effect finish. The circular silhouette creates a soft, welcoming feel while the lower shelf keeps your books and décor neatly displayed.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Shape": "Round", "Dimensions": "Ø 80 × 45 cm", "Weight Capacity": "25 kg", "Assembly": "Self-assembly (tools included)" },
-    features: ["Soft round shape — safe corners for family homes", "Open lower shelf for books, magazines & décor", "Premium oak effect finish with natural wood grain", "Four solid legs for maximum stability", "Wipe-clean surface"]
+    reviews: 86,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/061/1.jpeg",
+    images: ["assets/images/061/1.jpeg","assets/images/061/2.jpeg","assets/images/061/3.jpeg","assets/images/061/4.jpeg","assets/images/061/5.jpeg"],
+    description: "Contemporary white toilet roll cabinet with a roll holder at the top and a slimline storage cupboard below. Hardwearing composite wood with white-painted finish, curved side panels and a silver-coloured door handle. Holds up to 4 rolls plus other bathroom essentials.",
+    specs: { "Dimensions": "H79 × W18 × D20 cm", "Material": "Composite Wood", "Finish": "White Painted", "Capacity": "4+ toilet rolls", "Assembly": "Simple self-assembly" },
+    features: ["Roll holder at top — perfect tear-off height", "Push-in design for easy roll replacement", "Slimline cupboard with adjustable shelf", "Curved panels and silver door handle", "All fixings and instructions included"]
   },
   {
+    id: 2,
+    itemNo: "309",
+    name: "Free Standing Grey Toilet Paper Roll Holder with Shelf",
+    vendor: "Uni Merchant",
+    slug: "grey-toilet-roll-holder-shelf",
+    price: 19,
+    originalPrice: null,
+    badge: null,
+    rating: 4.6,
+    reviews: 63,
+    category: "bathroom",
+    variant: "Grey",
+    image: "assets/images/309/1.jpeg",
+    images: ["assets/images/309/1.jpeg","assets/images/309/2.jpeg","assets/images/309/3.jpeg","assets/images/309/4.jpeg"],
+    description: "Practical free-standing grey toilet paper holder and storage dispenser. Compact size fits perfectly in tight bathroom corners. Anti-corrosive MDF construction with a smooth finish — great for guest bathrooms, half baths and small spaces.",
+    specs: { "Dimensions": "W18 × D20 × H79.5 cm", "Material": "Anti-Corrosive MDF", "Finish": "Grey", "Capacity": "1 roll + 2 extra", "Assembly": "Easy self-assembly" },
+    features: ["Dispenses 1 roll, stores 2+ extra", "Top shelf for phone or accessories", "Compact — fits neatly in toilet corners", "Anti-corrosive wear-resistant MDF", "Easy to move anywhere in the bathroom"]
+  },
+  {
+    id: 6,
+    itemNo: "021",
+    name: "White Bathroom Mirror & Cosmetic Shelf — 40cm",
+    vendor: "Uni Merchant",
+    slug: "white-bathroom-mirror-shelf",
+    price: 17,
+    originalPrice: null,
+    badge: null,
+    rating: 4.8,
+    reviews: 94,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/021/1.jpeg",
+    images: ["assets/images/021/1.jpeg","assets/images/021/2.jpeg","assets/images/021/3.jpeg","assets/images/021/4.jpeg"],
+    description: "Stylish and practical white rectangular wall mirror with a cosmetic shelf below. Moisture-resistant P2 compliant MDF with non-toxic water-resistant paint. Hangs in bathroom, hallway, bedroom or home office to brighten any area of the home.",
+    specs: { "Dimensions": "W40 × D13 × H42.5 cm", "Material": "P2 Compliant MDF", "Finish": "White", "Shape": "Rectangular", "Mounting": "Wall Mount" },
+    features: ["Clear mirror for make-up and grooming", "Shelf for toiletries, ornaments and plants", "Moisture-resistant formaldehyde-free MDF", "Wipe clean with a damp cloth", "Easy wall mounting — all fixings included"]
+  },
+  {
+    id: 7,
+    itemNo: "105",
+    name: "White Slimline Bathroom Storage Cabinet — 4 Drawer",
+    vendor: "Uni Merchant",
+    slug: "white-slimline-bathroom-cabinet-4-drawer",
+    price: 38,
+    originalPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviews: 128,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/105/1.jpeg",
+    images: ["assets/images/105/1.jpeg","assets/images/105/2.jpeg","assets/images/105/3.jpeg","assets/images/105/4.jpeg"],
+    description: "Slim white 4-drawer bathroom storage cabinet delivered fully assembled and ready to use. Fits into almost any room — bathroom, bedroom, kitchen or living room. Anti-corrosive, wear-resistant MDF with a smooth surface that's easy to wipe clean.",
+    specs: { "Dimensions": "24D × 17W × 66H cm", "Material": "Engineered Wood (MDF)", "Finish": "White", "Drawers": "4", "Assembly": "Fully Assembled" },
+    features: ["4 separate drawers for organised storage", "Fully assembled — ready to use straight away", "Anti-corrosive wear-resistant MDF", "Slim profile fits any small space", "Multi-purpose — bathroom, bedroom or kitchen"]
+  },
+  {
+    id: 20,
+    itemNo: "059",
+    name: "White Under Sink Bathroom Storage Cabinet",
+    vendor: "Uni Merchant",
+    slug: "white-under-sink-bathroom-cabinet",
+    price: 28,
+    originalPrice: null,
+    badge: "new",
+    rating: 4.6,
+    reviews: 57,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/059/1.jpeg",
+    images: ["assets/images/059/1.jpeg","assets/images/059/2.jpeg","assets/images/059/3.jpeg","assets/images/059/4.jpeg"],
+    description: "Elegant white under-sink bathroom storage cabinet with 2 shaker-style doors, magnetic lock and internal adjustable shelf. Smooth MDF with white paint finish. Fits perfectly below a single bowl sink and is easy to assemble.",
+    specs: { "Dimensions": "30D × 60W × 60H cm", "Material": "MDF", "Finish": "White", "Doors": "2 with magnetic lock", "Assembly": "Flat Pack" },
+    features: ["2 shaker-style doors with magnetic lock", "Internal adjustable shelf", "Fits below a single bowl sink", "Smooth MDF — easy to wipe clean", "All mounting hardware included"]
+  },
+  {
+    id: 21,
+    itemNo: "104",
+    name: "White Multi-Purpose Bathroom Organiser with Lid",
+    vendor: "Uni Merchant",
+    slug: "white-bathroom-organiser-lid",
+    price: 15,
+    originalPrice: null,
+    badge: null,
+    rating: 4.5,
+    reviews: 44,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/104/1.jpeg",
+    images: ["assets/images/104/1.jpeg","assets/images/104/2.jpeg","assets/images/104/3.jpeg"],
+    description: "Compact white freestanding bathroom organiser with a lid. Stores up to 4 toilet rolls and bathroom cleaning products. Anti-corrosive MDF with smooth painted finish. Fits neatly beside the toilet — great for small bathrooms and apartments.",
+    specs: { "Dimensions": "W31 × D17 × H33 cm", "Material": "Engineered Wood (MDF)", "Finish": "White", "Feature": "With Lid", "Assembly": "Easy self-assembly" },
+    features: ["Stores up to 4 toilet rolls", "Lid keeps contents neat and tidy", "Fits perfectly in toilet corners", "Anti-corrosive, durable MDF", "Easy self-assembly required"]
+  },
+  {
+    id: 22,
+    itemNo: "234",
+    name: "Compact Grey Bathroom Storage Box",
+    vendor: "Uni Merchant",
+    slug: "grey-bathroom-storage-box",
+    price: 15,
+    originalPrice: null,
+    badge: null,
+    rating: 4.5,
+    reviews: 38,
+    category: "bathroom",
+    variant: "Grey",
+    image: "assets/images/234/1.jpeg",
+    images: ["assets/images/234/1.jpeg","assets/images/234/2.jpeg","assets/images/234/3.jpeg","assets/images/234/4.jpeg"],
+    description: "Compact grey freestanding bathroom storage box. Multi-purpose organiser for toilet rolls, cleaning supplies and bathroom accessories. Durable anti-corrosive MDF with smooth painted finish. Easy to move — great for small bathrooms, powder rooms and apartments.",
+    specs: { "Dimensions": "W31 × D17 × H33 cm", "Material": "MDF", "Finish": "Grey Painted", "Capacity": "Up to 4 toilet rolls", "Assembly": "Easy self-assembly" },
+    features: ["Stores up to 4 toilet rolls", "Compact — fits toilet corners", "Anti-corrosive durable MDF", "Easy to move anywhere", "Easy self-assembly required"]
+  },
+  {
+    id: 23,
+    itemNo: "544",
+    name: "Grey Wooden Laundry & Storage Box with Lid",
+    vendor: "Uni Merchant",
+    slug: "grey-laundry-storage-box-lid",
+    price: 29,
+    originalPrice: null,
+    badge: "new",
+    rating: 4.7,
+    reviews: 72,
+    category: "bathroom",
+    variant: "Grey",
+    image: "assets/images/544/1.jpeg",
+    images: ["assets/images/544/1.jpeg","assets/images/544/2.jpeg","assets/images/544/3.jpeg","assets/images/544/4.jpeg","assets/images/544/5.jpeg"],
+    description: "Stylish grey MDF laundry hamper and storage box with lid and two side handles. Ideal for towels, bedding, clothes and laundry. Contemporary design suits bathroom, bedroom or garage — large enough for most households' needs.",
+    specs: { "Dimensions": "51L × 35W × 51H cm", "Material": "MDF", "Colour": "Grey", "Features": "Lid + Portable Handles", "Style": "Contemporary" },
+    features: ["Spacious for laundry, towels and bedding", "Lid keeps contents neat", "Two handles for easy portability", "Sleek contemporary grey finish", "Great value for any room"]
+  },
+  {
+    id: 24,
+    itemNo: "060",
+    name: "White Double Door Wall-Mounted Mirror Cabinet",
+    vendor: "Uni Merchant",
+    slug: "white-mirror-cabinet-double-door",
+    price: 25,
+    originalPrice: null,
+    badge: null,
+    rating: 4.8,
+    reviews: 111,
+    category: "bathroom",
+    variant: "White",
+    image: "assets/images/060/1.jpeg",
+    images: ["assets/images/060/1.jpeg","assets/images/060/2.jpeg","assets/images/060/3.jpeg","assets/images/060/4.jpeg"],
+    description: "White wall-mounted bathroom mirror cabinet with double mirrored doors and an internal adjustable shelf. Sturdy tongue-and-groove composite wood with silver-coloured handles. Compact and slimline — perfect above toilet, basin or sink.",
+    specs: { "Dimensions": "H58 × W56 × D13 cm", "Material": "Composite Wood", "Finish": "White/Grey", "Doors": "2 Mirrored", "Mounting": "Wall Mount" },
+    features: ["Double mirrored doors for easy grooming", "Internal adjustable shelf", "Tongue-and-groove composite construction", "Compact — doesn't dominate the room", "Easy to assemble with included fixings"]
+  },
+
+  /* ── Furniture ── */
+  {
     id: 3,
-    name: "Minimalistic Wooden Side Table",
-    vendor: "Homme Concept",
-    slug: "minimalistic-wooden-side-table",
-    price: 49.99,
-    originalPrice: 64.99,
-    badge: "sale",
-    rating: 4.9,
-    reviews: 203,
+    itemNo: "089",
+    name: "2 Tier Oak Effect Round Side Table",
+    vendor: "Uni Merchant",
+    slug: "2-tier-oak-round-side-table",
+    price: 29,
+    originalPrice: null,
+    badge: "new",
+    rating: 4.8,
+    reviews: 97,
     category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
-      "https://images.unsplash.com/photo-1594617778-c1b8d415eb96?w=800&q=80",
-      "https://images.unsplash.com/photo-1549497538-303791108f95?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80"
-    ],
-    description: "The perfect companion for your sofa or armchair. This minimalistic side table in oak effect finish offers a clean, understated look that complements any interior style.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Shape": "Square", "Dimensions": "40 × 40 × 55 cm", "Weight Capacity": "15 kg", "Assembly": "Self-assembly (tools included)" },
-    features: ["Ultra-minimalist design fits any interior", "Ideal bedside, sofa or accent table", "Warm oak effect grain finish", "Compact footprint — great for small spaces", "Sturdy four-leg construction"]
+    variant: "Oak",
+    image: "assets/images/089/1.jpeg",
+    images: ["assets/images/089/1.jpeg","assets/images/089/2.jpeg","assets/images/089/3.jpeg","assets/images/089/4.jpeg"],
+    description: "Contemporary 2-tier round oak effect side table with a strong cross-frame design. Waterproof and heat-resistant surface. Perfect as a lamp table, plant stand or bedside table in living room, bedroom or small spaces. Installs in under 15 minutes.",
+    specs: { "Dimensions": "50 × 50 × 50 cm", "Material": "E1 PB Board", "Colour": "Oak Effect", "Max Weight": "20 kg", "Assembly": "Under 15 mins" },
+    features: ["2-tier cross-frame design — strong and stable", "Waterproof and heat-resistant top", "ECO-friendly E1 PB board", "Assembles in under 15 minutes", "Great as lamp, plant or bedside table"]
   },
   {
     id: 4,
-    name: "Set of 2 Nesting Side Tables",
-    vendor: "Homme Concept",
-    slug: "set-of-2-nesting-side-tables",
-    price: 94.99,
-    originalPrice: 124.99,
-    badge: "sale",
+    itemNo: "563",
+    name: "2 Cube Storage Bookcase with Fabric Basket — White",
+    vendor: "Uni Merchant",
+    slug: "white-2-cube-storage-bookcase-basket",
+    price: 19,
+    originalPrice: null,
+    badge: null,
     rating: 4.6,
-    reviews: 68,
+    reviews: 83,
     category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1594617778-c1b8d415eb96?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1594617778-c1b8d415eb96?w=800&q=80",
-      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
-    ],
-    description: "Versatile and space-savvy, this set of two nesting side tables can be used together or separately. Stack them to save space or spread them around the room.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Includes": "2 tables", "Large Table": "50 × 50 × 55 cm", "Small Table": "40 × 40 × 48 cm", "Weight Capacity": "15 kg each" },
-    features: ["Set of two complementary sizes", "Nest together to save floor space", "Use separately for flexible living", "Matching oak effect finish throughout", "Great as sofa, bedside or accent tables"]
+    variant: "White",
+    image: "assets/images/563/1.jpeg",
+    images: ["assets/images/563/1.jpeg","assets/images/563/2.jpeg"],
+    description: "Stylish white freestanding 2-cube bookcase with 1 fabric basket included. Use vertically or horizontally to suit your space. Perfect for bedroom, living room, nursery, office or garage — adds a great focal point to any room.",
+    specs: { "Dimensions": "W30 × D28 × H60 cm", "Material": "Engineered Wood", "Finish": "White", "Shelves": "2", "Includes": "1 Fabric Basket" },
+    features: ["Includes 1 fabric basket", "Freestanding — no wall fixing needed", "Display vertically or horizontally", "12mm particle board with laminated finish", "Great for bedroom, office, nursery or living room"]
   },
 
   /* ── Shelves ── */
   {
     id: 5,
-    name: "Floating Wall Shelf Set of 3",
+    itemNo: "304",
+    name: "White Multi Compartment Floating Display Shelves",
     vendor: "Uni Merchant",
-    slug: "floating-wall-shelf-set-of-3",
-    price: 34.99,
-    originalPrice: 44.99,
-    badge: "sale",
-    rating: 4.7,
-    reviews: 156,
-    category: "shelves",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&q=80",
-      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80"
-    ],
-    description: "Transform any empty wall into a stylish display with this set of 3 floating shelves. Perfect for books, plants, photos and decorative pieces. Easy to install with all fixings included.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Includes": "3 shelves + fixings", "Large Shelf": "60 × 15 × 3.8 cm", "Medium Shelf": "50 × 15 × 3.8 cm", "Small Shelf": "40 × 15 × 3.8 cm" },
-    features: ["Set of 3 graduated sizes for stylish arrangements", "Easy wall-mount with all fixings included", "Sturdy enough for books, plants and décor", "Invisible bracket system for a clean look", "Matches all oak effect furniture in our range"]
-  },
-  {
-    id: 6,
-    name: "Industrial Pipe Bookshelf — 5 Tier",
-    vendor: "Uni Merchant",
-    slug: "industrial-pipe-bookshelf-5-tier",
-    price: 129.99,
-    originalPrice: null,
-    badge: "new",
-    rating: 4.8,
-    reviews: 44,
-    category: "shelves",
-    variant: "Black & Oak",
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80",
-      "https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&q=80",
-      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80"
-    ],
-    description: "Make a bold style statement with this 5-tier industrial bookshelf. The combination of matte black metal pipe frame and rustic oak effect shelves creates a striking focal point in any room.",
-    specs: { "Material": "MDF Shelves + Metal Frame", "Finish": "Oak Effect + Matte Black", "Tiers": "5", "Dimensions": "60 × 30 × 180 cm", "Weight Capacity": "20 kg per shelf", "Assembly": "Self-assembly (tools included)" },
-    features: ["Bold industrial design — a real room feature", "5 generous shelves for books, plants & display", "Sturdy metal pipe frame construction", "Rubber foot pads protect floors", "Free-standing — no wall fixing needed"]
-  },
-  {
-    id: 7,
-    name: "Corner Wall Shelf Unit",
-    vendor: "Uni Merchant",
-    slug: "corner-wall-shelf-unit",
-    price: 24.99,
+    slug: "white-floating-display-shelves",
+    price: 18,
     originalPrice: null,
     badge: null,
-    rating: 4.5,
-    reviews: 91,
+    rating: 4.7,
+    reviews: 142,
     category: "shelves",
     variant: "White",
-    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&q=80",
-      "https://images.unsplash.com/photo-1532372576444-dda954194ad0?w=800&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80",
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80"
-    ],
-    description: "Make the most of unused corner space with this clever corner shelf unit. Ideal for displaying plants, candles, books and ornaments. Simple wall mounting and a clean white finish.",
-    specs: { "Material": "MDF", "Finish": "White", "Tiers": "3", "Dimensions": "25 × 25 × 65 cm", "Weight Capacity": "5 kg per tier", "Assembly": "Wall-mount (fixings included)" },
-    features: ["Clever corner design maximises space", "3 tiers for plants, candles and décor", "Clean white finish suits any room", "All wall fixings included", "Lightweight and easy to install"]
+    image: "assets/images/304/1.jpeg",
+    images: ["assets/images/304/1.jpeg","assets/images/304/2.jpeg","assets/images/304/3.jpeg","assets/images/304/4.jpeg","assets/images/304/5.jpeg","assets/images/304/6.jpeg"],
+    description: "Modern white multi-compartment floating wall shelf. Unique design adds charm and personality to any room — living room, bedroom, hallway, kitchen or home office. Eliminates clutter and maximises vertical wall space. Holds up to 11 pounds.",
+    specs: { "Dimensions": "W60 × D16 × H48 cm", "Material": "Engineered Wood", "Finish": "White", "Shelves": "3", "Mounting": "Wall Mount", "Max Load": "11 lbs" },
+    features: ["Unique multi-compartment design", "Maximises vertical wall space", "Holds up to 11 pounds", "Easy assembly with all fixings included", "Suits any room décor"]
   },
-
-  /* ── Kitchen ── */
   {
     id: 8,
-    name: "Marble Effect Canister Set of 3",
+    itemNo: "248",
+    name: "Grey Multi Compartment Floating Display Shelves",
     vendor: "Uni Merchant",
-    slug: "marble-effect-canister-set-of-3",
-    price: 29.99,
-    originalPrice: 39.99,
-    badge: "sale",
-    rating: 4.8,
-    reviews: 112,
-    category: "kitchen",
-    variant: "White Marble",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-      "https://images.unsplash.com/photo-1604719312566-8912e9667d9f?w=800&q=80",
-      "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
-    ],
-    description: "Keep your kitchen countertop beautifully organised with this elegant marble effect canister set. Three graduated sizes store tea, coffee, sugar and more — all with airtight bamboo lids.",
-    specs: { "Material": "Ceramic with Bamboo Lid", "Finish": "White Marble Effect", "Includes": "3 canisters", "Sizes": "Small / Medium / Large", "Lid": "Airtight bamboo seal", "Dishwasher Safe": "No — hand wash only" },
-    features: ["Airtight bamboo lids keep contents fresh", "Marble effect ceramic — looks luxurious", "Set of 3 graduated sizes", "Perfect for tea, coffee, sugar, pasta", "Easy to wipe clean"]
+    slug: "grey-floating-display-shelves",
+    price: 16,
+    originalPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviews: 98,
+    category: "shelves",
+    variant: "Grey",
+    image: "assets/images/248/1.jpeg",
+    images: ["assets/images/248/1.jpeg","assets/images/248/2.jpeg","assets/images/248/3.jpeg","assets/images/248/4.jpeg"],
+    description: "Solid grey MDF laminate floating wall shelf with space-saving multi-compartment design. Sturdy enough for books, photo frames, plants and small items. Wall-mount in any room — bedroom, hallway, kitchen, living room or office. Max load 10 kg.",
+    specs: { "Dimensions": "9D × 76W × 48H cm", "Material": "MDF Laminate", "Finish": "Grey Matte", "Mounting": "Wall Mount", "Max Load": "10 kg" },
+    features: ["Sturdy MDF laminate construction", "Space-saving multi-compartment design", "Max load 10 kg", "Pre-drilled keyholes for easy installation", "Includes mounting screws and anchors"]
   },
   {
     id: 9,
-    name: "Bamboo Utensil Holder & Organiser",
+    itemNo: "038",
+    name: "Black Multi Compartment Floating Display Shelves",
     vendor: "Uni Merchant",
-    slug: "bamboo-utensil-holder-organiser",
-    price: 19.99,
+    slug: "black-floating-display-shelves",
+    price: 16,
     originalPrice: null,
-    badge: "new",
+    badge: null,
     rating: 4.6,
-    reviews: 78,
-    category: "kitchen",
-    variant: "Natural Bamboo",
-    image: "https://images.unsplash.com/photo-1604719312566-8912e9667d9f?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1604719312566-8912e9667d9f?w=800&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-      "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80",
-      "https://images.unsplash.com/photo-1604719312566-8912e9667d9f?w=800&q=80"
-    ],
-    description: "Declutter your kitchen countertop with this stylish bamboo utensil holder. Four separate compartments keep spatulas, spoons and ladles perfectly sorted. Naturally antibacterial and eco-friendly.",
-    specs: { "Material": "100% Natural Bamboo", "Compartments": "4", "Dimensions": "22 × 22 × 20 cm", "Care": "Wipe clean — do not submerge", "Eco-Friendly": "Yes — sustainable bamboo" },
-    features: ["4 compartments keep utensils sorted", "Naturally antibacterial bamboo", "Eco-friendly and sustainable material", "Wipe-clean for effortless maintenance", "Stylish enough to leave on display"]
+    reviews: 74,
+    category: "shelves",
+    variant: "Black",
+    image: "assets/images/038/1.jpeg",
+    images: ["assets/images/038/1.jpeg","assets/images/038/2.jpeg","assets/images/038/3.jpeg","assets/images/038/4.jpeg"],
+    description: "Bold black MDF laminate floating wall shelf with space-saving multi-compartment design. A striking accent for any wall — living room, bedroom, bathroom or kitchen. Sturdy enough for books, plants, frames and décor. Max load 10 kg.",
+    specs: { "Dimensions": "9D × 76W × 48H cm", "Material": "MDF Laminate", "Finish": "Matte Black", "Mounting": "Wall Mount", "Max Load": "10 kg" },
+    features: ["Matte black finish for a bold statement", "Space-saving multi-compartment design", "Max load 10 kg", "Pre-drilled keyholes", "Includes mounting hardware"]
   },
   {
     id: 10,
-    name: "Wooden Dish Drying Rack",
+    itemNo: "037",
+    name: "Oak Effect Multi Compartment Floating Display Shelves",
     vendor: "Uni Merchant",
-    slug: "wooden-dish-drying-rack",
-    price: 39.99,
-    originalPrice: 49.99,
-    badge: "sale",
-    rating: 4.5,
-    reviews: 63,
-    category: "kitchen",
-    variant: "Natural Wood",
-    image: "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80",
-      "https://images.unsplash.com/photo-1604719312566-8912e9667d9f?w=800&q=80",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-      "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80"
-    ],
-    description: "Upgrade your washing-up routine with this Scandinavian-style wooden dish drying rack. Slots for plates and cups, a cutlery holder and a draining tray — all in a beautiful natural wood finish.",
-    specs: { "Material": "Beech Wood + Stainless Steel", "Finish": "Natural Wood", "Includes": "Draining tray", "Plate Capacity": "Up to 8 plates", "Dimensions": "42 × 30 × 35 cm", "Care": "Wipe clean" },
-    features: ["Scandi-inspired natural wood design", "Slots for plates, cups and a cutlery holder", "Removable stainless steel draining tray", "Rubber feet prevent sliding on countertops", "Far more stylish than a standard plastic rack"]
+    slug: "oak-floating-display-shelves",
+    price: 16,
+    originalPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviews: 61,
+    category: "shelves",
+    variant: "Oak Effect",
+    image: "assets/images/037/1.jpeg",
+    images: ["assets/images/037/1.jpeg","assets/images/037/2.jpeg","assets/images/037/3.jpeg","assets/images/037/4.jpeg"],
+    description: "Warm oak effect MDF floating wall shelf with space-saving multi-compartment design. A stylish addition to any room — display books, photos, plants and décor in living room, bedroom, hallway or kitchen. Max load 10 kg.",
+    specs: { "Dimensions": "9D × 76W × 48H cm", "Material": "MDF Laminate", "Finish": "Oak Effect", "Mounting": "Wall Mount", "Max Load": "10 kg" },
+    features: ["Warm oak effect finish", "Space-saving multi-compartment design", "Max load 10 kg", "Pre-drilled keyholes for easy install", "Includes mounting hardware"]
   },
-
-  /* ── Home Decor ── */
   {
     id: 11,
-    name: "Ceramic Vase Set of 3 — Earthy Tones",
+    itemNo: "036",
+    name: "White Multi Compartment Floating Shelf Organiser",
     vendor: "Uni Merchant",
-    slug: "ceramic-vase-set-of-3",
-    price: 32.99,
+    slug: "white-floating-shelf-organiser",
+    price: 16,
     originalPrice: null,
-    badge: "new",
-    rating: 4.9,
-    reviews: 189,
-    category: "home-decor",
-    variant: "Terracotta / Cream / Sage",
-    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
-      "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800&q=80",
-      "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80",
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80"
-    ],
-    description: "Add an instant touch of warmth to your home with this trio of handcrafted ceramic vases. Three graduated sizes in harmonious earthy tones — terracotta, cream and sage — perfect for dried flowers, pampas grass or standing alone.",
-    specs: { "Material": "Glazed Ceramic", "Colours": "Terracotta, Cream, Sage", "Includes": "3 vases", "Tall Vase": "H 28 cm", "Medium Vase": "H 20 cm", "Small Vase": "H 14 cm" },
-    features: ["Three complementary earthy tones", "Handcrafted glazed ceramic finish", "Beautiful with dried or fresh flowers", "Weighted base for stability", "Wipe clean with a damp cloth"]
+    badge: null,
+    rating: 4.6,
+    reviews: 52,
+    category: "shelves",
+    variant: "White",
+    image: "assets/images/036/1.jpeg",
+    images: ["assets/images/036/1.jpeg","assets/images/036/2.jpeg"],
+    description: "Clean white MDF floating wall shelf with multi-compartment space-saving design. Sturdy MDF laminate with a matte white finish — a perfect complement to any room. Ideal for bedroom, hallway, kitchen, living room or office. Max load 10 kg.",
+    specs: { "Dimensions": "9D × 76W × 48H cm", "Material": "MDF Laminate", "Finish": "White Matte", "Mounting": "Wall Mount", "Max Load": "10 kg" },
+    features: ["Clean white matte finish", "Space-saving multi-compartment design", "Max load 10 kg", "Pre-drilled keyholes", "Includes mounting hardware"]
   },
   {
     id: 12,
-    name: "Luxury Scented Soy Candle",
+    itemNo: "019",
+    name: "Set of 3 Floating Cube Shelves — Square Wall Shelves",
     vendor: "Uni Merchant",
-    slug: "luxury-scented-soy-candle",
-    price: 18.99,
+    slug: "set-3-floating-cube-shelves",
+    price: 13,
     originalPrice: null,
     badge: null,
     rating: 4.8,
-    reviews: 234,
-    category: "home-decor",
-    variant: "Cedarwood & Amber",
-    image: "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800&q=80",
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
-      "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80",
-      "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800&q=80"
-    ],
-    description: "Fill your home with the warm, grounding scent of cedarwood and amber. Hand-poured into a reusable concrete-effect vessel, this 100% natural soy wax candle burns for up to 45 hours.",
-    specs: { "Material": "100% Soy Wax", "Scent": "Cedarwood & Amber", "Burn Time": "Up to 45 hours", "Weight": "250g", "Wick": "Natural cotton", "Vessel": "Reusable concrete-effect pot" },
-    features: ["100% natural soy wax — clean, long burn", "Up to 45 hours burn time", "Warm cedarwood & amber fragrance", "Hand-poured in small batches", "Reusable vessel after use"]
+    reviews: 176,
+    category: "shelves",
+    variant: "Natural Wood",
+    image: "assets/images/019/1.jpeg",
+    images: ["assets/images/019/1.jpeg","assets/images/019/2.jpeg","assets/images/019/3.jpeg","assets/images/019/4.jpeg","assets/images/019/5.jpeg"],
+    description: "Modern set of 3 square cube wall shelves in 3 graduated sizes. Moisture-proof, safe and lightweight solid wood material. Ready to hang — just fix to the wall with the included hardware kit. Perfect for trophies, plants, books and small décor.",
+    specs: { "Sizes": "Small 15×9×15 / Med 20×9×20 / Large 25×9×25 cm", "Material": "Solid Wood", "Mounting": "Wall Mount", "Includes": "3 shelves + hardware" },
+    features: ["3 graduated square cube sizes", "Moisture-proof lightweight solid wood", "Ready to hang — hardware included", "Ideal for trophies, books and plants", "Multi-purpose for any room"]
   },
   {
     id: 13,
-    name: "Minimalist Wall Clock — 30cm",
+    itemNo: "001",
+    name: "Floating Shelves Set of 3 — U Shaped (White)",
     vendor: "Uni Merchant",
-    slug: "minimalist-wall-clock-30cm",
-    price: 27.99,
-    originalPrice: 34.99,
-    badge: "sale",
+    slug: "floating-shelves-set-3-white",
+    price: 9,
+    originalPrice: null,
+    badge: null,
     rating: 4.7,
-    reviews: 97,
-    category: "home-decor",
-    variant: "Black & Gold",
-    image: "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80",
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=800&q=80",
-      "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800&q=80",
-      "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=800&q=80"
-    ],
-    description: "A sleek, silent minimalist wall clock that makes a stylish statement in any room. The open-frame design with gold hands and subtle index markers adds a contemporary touch to living rooms, kitchens and offices.",
-    specs: { "Material": "Metal Frame + Glass", "Finish": "Matte Black & Gold", "Diameter": "30 cm", "Movement": "Quartz — silent sweep", "Battery": "1 × AA (not included)", "Mounting": "Single hook — fixings included" },
-    features: ["Silent sweep movement — no ticking", "Minimalist open-frame design", "Matte black frame with gold hands", "Easy single-hook wall mounting", "Works in living rooms, kitchens, offices & bedrooms"]
+    reviews: 209,
+    category: "shelves",
+    variant: "White",
+    image: "assets/images/001/1.jpeg",
+    images: ["assets/images/001/1.jpeg","assets/images/001/2.jpeg","assets/images/001/3.jpeg","assets/images/001/4.jpeg","assets/images/001/5.jpeg"],
+    description: "Set of 3 white U-shaped floating wall shelves in 3 different sizes. Sturdy MDF laminate with a clean white finish. Pre-drilled keyholes and all mounting hardware included. Perfect for bedroom, bathroom, kitchen, living room and office.",
+    specs: { "Large": "42.5×10×10 cm", "Medium": "32.5×10×8.8 cm", "Small": "22.5×10×7.2 cm", "Material": "MDF", "Max Load": "3 kg per shelf" },
+    features: ["Set of 3 graduated sizes", "Clean white MDF laminate finish", "Max 3 kg per shelf", "Pre-drilled keyholes", "Includes mounting screws and anchors"]
   },
   {
     id: 14,
-    name: "Rectangular Coffee Table with Open Shelf",
-    vendor: "Homme Concept",
-    slug: "rectangular-coffee-table-open-shelf",
-    price: 104.99,
+    itemNo: "004",
+    name: "Floating Shelves Set of 3 — U Shaped (Grey)",
+    vendor: "Uni Merchant",
+    slug: "floating-shelves-set-3-grey",
+    price: 9,
     originalPrice: null,
-    badge: "new",
-    rating: 4.7,
-    reviews: 42,
-    category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80",
-      "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&q=80",
-      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80"
-    ],
-    description: "A refined rectangular coffee table designed for the modern living room. The open lower shelf offers generous storage for books, trays and accessories, while the oak effect surface adds warmth.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Shape": "Rectangular", "Dimensions": "120 × 60 × 45 cm", "Weight Capacity": "35 kg", "Assembly": "Self-assembly (tools included)" },
-    features: ["Generous rectangular surface for large living rooms", "Spacious lower shelf for storage", "Premium oak effect with realistic wood grain", "Solid frame for long-lasting durability", "Matches full Homme Concept furniture range"]
+    badge: null,
+    rating: 4.6,
+    reviews: 147,
+    category: "shelves",
+    variant: "Grey",
+    image: "assets/images/004/1.jpeg",
+    images: ["assets/images/004/1.jpeg","assets/images/004/2.jpeg","assets/images/004/3.jpeg","assets/images/004/4.jpeg","assets/images/004/5.jpeg"],
+    description: "Set of 3 grey U-shaped floating wall shelves in 3 different sizes. MDF laminate with a matte grey finish. Pre-drilled keyholes and all mounting hardware included. Suits bedroom, hallway, bathroom, kitchen or living room.",
+    specs: { "Large": "42.5×10×10 cm", "Medium": "32.5×10×8.8 cm", "Small": "22.5×10×7.2 cm", "Material": "MDF", "Max Load": "3 kg per shelf" },
+    features: ["Set of 3 graduated sizes", "Matte grey MDF laminate finish", "Max 3 kg per shelf", "Pre-drilled keyholes", "Includes mounting hardware"]
   },
   {
     id: 15,
-    name: "Compact Round Accent Table",
-    vendor: "Homme Concept",
-    slug: "compact-round-accent-table",
-    price: 39.99,
+    itemNo: "003",
+    name: "Floating Shelves Set of 3 — U Shaped (Light Oak Effect)",
+    vendor: "Uni Merchant",
+    slug: "floating-shelves-set-3-light-oak",
+    price: 9,
     originalPrice: null,
     badge: null,
-    rating: 4.5,
-    reviews: 56,
-    category: "furniture",
-    variant: "Oak Effect",
-    image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1549497538-303791108f95?w=800&q=80",
-      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80",
-      "https://images.unsplash.com/photo-1594617778-c1b8d415eb96?w=800&q=80",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80"
-    ],
-    description: "Small but perfectly formed, this compact round accent table is ideal for tight spaces. Place it beside your bed, next to your favourite chair, or use it as a plant stand — a true multitasker.",
-    specs: { "Material": "MDF with Oak Effect Foil", "Finish": "Oak Effect", "Shape": "Round", "Dimensions": "Ø 40 × 50 cm", "Weight Capacity": "10 kg", "Assembly": "Self-assembly (tools included)" },
-    features: ["Compact size perfect for small spaces", "Round top avoids sharp corners", "Light enough to move around freely", "Oak effect finish with natural grain detail", "Three slim legs for a modern, airy look"]
+    rating: 4.7,
+    reviews: 118,
+    category: "shelves",
+    variant: "Light Oak Effect",
+    image: "assets/images/003/1.jpeg",
+    images: ["assets/images/003/1.jpeg","assets/images/003/2.jpeg","assets/images/003/3.jpeg"],
+    description: "Set of 3 light oak effect U-shaped floating wall shelves in 3 graduated sizes. Warm oak finish MDF laminate. Pre-drilled keyholes and all mounting hardware included. Looks great in living room, bedroom, hallway, bathroom or kitchen.",
+    specs: { "Large": "42.5×10×10 cm", "Medium": "32.5×10×8.8 cm", "Small": "22.5×10×7.2 cm", "Material": "MDF", "Max Load": "3 kg per shelf" },
+    features: ["Set of 3 graduated sizes", "Warm light oak effect finish", "Max 3 kg per shelf", "Pre-drilled keyholes", "Includes mounting hardware"]
+  },
+  {
+    id: 16,
+    itemNo: "002",
+    name: "Floating Shelves Set of 3 — U Shaped (Black)",
+    vendor: "Uni Merchant",
+    slug: "floating-shelves-set-3-black",
+    price: 9,
+    originalPrice: null,
+    badge: null,
+    rating: 4.6,
+    reviews: 93,
+    category: "shelves",
+    variant: "Matte Black",
+    image: "assets/images/002/1.jpeg",
+    images: ["assets/images/002/1.jpeg","assets/images/002/2.jpeg","assets/images/002/3.jpeg"],
+    description: "Set of 3 matte black U-shaped floating wall shelves in 3 graduated sizes. Bold black MDF laminate finish. Pre-drilled keyholes and all mounting hardware included. Makes a striking statement in any room of the home.",
+    specs: { "Large": "42.5×10×10 cm", "Medium": "32.5×10×8.8 cm", "Small": "22.5×10×7.2 cm", "Material": "MDF", "Max Load": "3 kg per shelf" },
+    features: ["Set of 3 graduated sizes", "Bold matte black finish", "Max 3 kg per shelf", "Pre-drilled keyholes", "Includes mounting screws and anchors"]
+  },
+  {
+    id: 17,
+    itemNo: "027",
+    name: "White 5 Tier Zig Zag Corner Shelf",
+    vendor: "Uni Merchant",
+    slug: "white-5-tier-zigzag-corner-shelf",
+    price: 15,
+    originalPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviews: 134,
+    category: "shelves",
+    variant: "White",
+    image: "assets/images/027/1.jpeg",
+    images: ["assets/images/027/1.jpeg","assets/images/027/2.jpeg","assets/images/027/3.jpeg","assets/images/027/4.jpeg","assets/images/027/5.jpeg","assets/images/027/6.jpeg"],
+    description: "Modern white 5-tier zig zag corner wall shelf. Turns unused corners into stylish storage. Perfect for books, plants, trophies and décor in any room — bathroom, bedroom, hallway, kitchen, living room or office. Holds up to 11 pounds.",
+    specs: { "Dimensions": "20 × 20 × 127.5 cm", "Material": "Wood", "Finish": "White", "Tiers": "5", "Max Load": "11 lbs" },
+    features: ["Modern zig zag corner design", "5 generous tiers for display and storage", "Holds up to 11 pounds", "Suits any room in the home", "Easy assembly with all fixings included"]
+  },
+  {
+    id: 18,
+    itemNo: "024",
+    name: "Black 5 Tier Zig Zag Corner Shelf",
+    vendor: "Uni Merchant",
+    slug: "black-5-tier-zigzag-corner-shelf",
+    price: 15,
+    originalPrice: null,
+    badge: null,
+    rating: 4.7,
+    reviews: 89,
+    category: "shelves",
+    variant: "Black",
+    image: "assets/images/024/1.jpeg",
+    images: ["assets/images/024/1.jpeg","assets/images/024/2.jpeg","assets/images/024/3.jpeg"],
+    description: "Bold black 5-tier zig zag corner wall shelf. Makes a statement in any unused corner — bathroom, bedroom, hallway, living room, kitchen or home office. 5 tiers for books, plants, trophies and décor. Holds up to 11 pounds.",
+    specs: { "Dimensions": "20 × 20 × 127.5 cm", "Material": "Wood", "Finish": "Black", "Tiers": "5", "Max Load": "11 lbs" },
+    features: ["Bold black zig zag design", "5 generous tiers", "Holds up to 11 pounds", "Suits any room", "Easy assembly with all fixings included"]
+  },
+  {
+    id: 19,
+    itemNo: "015",
+    name: "White 5 Tier Step Shelf — Zig Zag Wall Mount",
+    vendor: "Uni Merchant",
+    slug: "white-5-tier-step-shelf",
+    price: 10,
+    originalPrice: null,
+    badge: null,
+    rating: 4.6,
+    reviews: 67,
+    category: "shelves",
+    variant: "White",
+    image: "assets/images/015/1.jpeg",
+    images: ["assets/images/015/1.jpeg","assets/images/015/2.jpeg","assets/images/015/3.jpeg"],
+    description: "Modern white zig zag step wall shelf with 5 tiered shelves. Turns any empty wall into additional storage. Perfect for books, plants, CDs and décor in bedroom, hallway, kitchen, living room or home office. Holds up to 11 pounds.",
+    specs: { "Dimensions": "59 × 59 × 12 cm", "Material": "Wood", "Finish": "White", "Tiers": "5", "Max Load": "11 lbs" },
+    features: ["Modern zig zag step design", "5 tiered shelves", "Holds up to 11 pounds", "Suits bedroom, hallway, kitchen and more", "All fixings included"]
   }
 ];
 
 /* ── Category Config ── */
 const CATEGORIES = [
-  { key: "all",        label: "All Products" },
-  { key: "furniture",  label: "Furniture" },
-  { key: "shelves",    label: "Shelves" },
-  { key: "kitchen",    label: "Kitchen" },
-  { key: "home-decor", label: "Home Decor" }
+  { key: "all",       label: "All Products" },
+  { key: "furniture", label: "Furniture" },
+  { key: "shelves",   label: "Shelves" },
+  { key: "bathroom",  label: "Bathroom" }
 ];
 
 /* ── Store Config ── */
@@ -396,7 +504,7 @@ function addToCart(productId, qty = 1, variant) {
   if (existing) {
     existing.qty += qty;
   } else {
-    cart.push({ id: productId, qty, variant: v, name: product.name, price: product.price, image: product.image });
+    cart.push({ id: productId, itemNo: product.itemNo, qty, variant: v, name: product.name, price: product.price, image: product.image });
   }
   saveCart();
   showToast(`"${product.name.length > 32 ? product.name.substring(0, 32) + '…' : product.name}" added to cart`);
@@ -439,7 +547,7 @@ function renderCartItems() {
         </div>
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-variant">${item.variant} · Qty: ${item.qty}</div>
+          <div class="cart-item-variant">Item #${item.itemNo} · ${item.variant} · Qty: ${item.qty}</div>
           <div class="cart-item-bottom">
             <div class="cart-item-price">£${(item.price * item.qty).toFixed(2)}</div>
             <button class="cart-item-remove" onclick="removeFromCart(${item.id}, '${item.variant.replace(/'/g,"\\'")}')">Remove</button>
@@ -657,7 +765,7 @@ function openCheckoutModal() {
     <div class="checkout-order-line">
       <div>
         <div class="line-name">${i.name}</div>
-        <div class="line-meta">${i.variant} · Qty ${i.qty}</div>
+        <div class="line-meta">Item #${i.itemNo} · ${i.variant} · Qty ${i.qty}</div>
       </div>
       <div class="line-price">£${(i.price * i.qty).toFixed(2)}</div>
     </div>`).join('');
@@ -695,7 +803,7 @@ function formatOrderMessage(customer) {
   const date = new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
 
   let lines = cart.map(i =>
-    `• ${i.name} (${i.variant}) × ${i.qty} — £${(i.price * i.qty).toFixed(2)}`
+    `• [#${i.itemNo}] ${i.name} (${i.variant}) × ${i.qty} — £${(i.price * i.qty).toFixed(2)}`
   ).join('\n');
 
   return {
@@ -732,7 +840,7 @@ Please confirm this order. Thank you!`
       delivery_address: `${customer.address}, ${customer.city}, ${customer.postcode}`,
       order_notes:  customer.notes || 'None',
       order_items:  cart.map(i =>
-        `${i.name} (${i.variant}) × ${i.qty} — £${(i.price * i.qty).toFixed(2)}`
+        `[#${i.itemNo}] ${i.name} (${i.variant}) × ${i.qty} — £${(i.price * i.qty).toFixed(2)}`
       ).join('\n'),
       order_total:  `£${cartTotal().toFixed(2)}`,
       to_email:     STORE.email
@@ -806,15 +914,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('menuBtn')?.addEventListener('click', openMenu);
   document.getElementById('closeMenuBtn')?.addEventListener('click', closeMenu);
 
-  /* Featured products (homepage) — show 1 from each category */
+  /* Featured products (homepage) — handpicked from each category */
   const featuredGrid = document.getElementById('featuredGrid');
   if (featuredGrid) {
+    const byCategory = cat => PRODUCTS.filter(p => p.category === cat);
     const picks = [
-      PRODUCTS.find(p => p.category === 'furniture'),
-      PRODUCTS.find(p => p.category === 'shelves'),
-      PRODUCTS.find(p => p.category === 'kitchen'),
-      PRODUCTS.find(p => p.category === 'home-decor')
-    ];
+      byCategory('furniture')[0],
+      byCategory('shelves')[0],
+      byCategory('shelves')[3],
+      byCategory('bathroom')[0]
+    ].filter(Boolean);
     featuredGrid.innerHTML = picks.map(productCardHTML).join('');
   }
 
