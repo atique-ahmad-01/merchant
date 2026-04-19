@@ -480,6 +480,8 @@ const STORE = {
   name:      'Uni Merchant Store',
   email:     'hello@unimerchant.store',
   whatsapp:  '447787675032',          // international format, no +
+  // PayPal — sign up at developer.paypal.com, create a REST app, copy the Client ID:
+  paypalClientId: 'AeDcIQYGVamPwHG89DZH5RgzIJDNRypIoGY4q6Dnv0G1UaT8vpHgyYnrwLa60sOSf6nw52TlVFL61OVV',
   // EmailJS credentials — sign up free at emailjs.com and replace these:
   emailjs: {
     publicKey:  'YOUR_EMAILJS_PUBLIC_KEY',   // Account > API Keys
@@ -725,6 +727,15 @@ function buildCheckoutModal() {
           <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
           Place Order via WhatsApp
         </button>
+
+        <!-- PayPal divider + button -->
+        <div style="display:flex;align-items:center;gap:12px;margin:20px 0 16px;">
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">or pay with</span>
+          <div style="flex:1;height:1px;background:var(--border);"></div>
+        </div>
+        <div id="paypal-button-container" style="min-height:48px;"></div>
+
         <p class="checkout-note">
           Your order details will be sent to our WhatsApp and email.<br>
           We will confirm your order and delivery within 2 hours.
@@ -754,6 +765,71 @@ function buildCheckoutModal() {
   document.getElementById('coSubmitBtn').addEventListener('click', submitOrder);
 }
 
+function loadPayPal() {
+  const clientId = STORE.paypalClientId;
+  if (!clientId || clientId === 'YOUR_PAYPAL_CLIENT_ID') return;
+
+  // Remove any previously rendered PayPal buttons (cart may have changed)
+  const container = document.getElementById('paypal-button-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Load SDK once
+  const sdkId = 'paypal-sdk';
+  const existing = document.getElementById(sdkId);
+  const renderButtons = () => {
+    if (!window.paypal) return;
+    window.paypal.Buttons({
+      style: { layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
+      createOrder(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: cartTotal().toFixed(2), currency_code: 'GBP' },
+            description: `Uni Merchant Store Order`
+          }]
+        });
+      },
+      onApprove(data, actions) {
+        return actions.order.capture().then(() => {
+          if (!validateCheckoutForm()) {
+            showToast('Please fill in your delivery details above');
+            return;
+          }
+          const customer = {
+            name:     document.getElementById('coName').value.trim(),
+            email:    document.getElementById('coEmail').value.trim(),
+            phone:    document.getElementById('coPhone').value.trim(),
+            address:  document.getElementById('coAddress').value.trim(),
+            city:     document.getElementById('coCity').value.trim(),
+            postcode: document.getElementById('coPostcode').value.trim(),
+            notes:    document.getElementById('coNotes').value.trim()
+          };
+          const msg = formatOrderMessage(customer);
+          window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
+          cart = [];
+          saveCart();
+          document.getElementById('checkoutFormView').style.display = 'none';
+          document.getElementById('checkoutSuccess').classList.add('show');
+        });
+      },
+      onError(err) {
+        console.error('PayPal error', err);
+        showToast('PayPal payment failed — please try WhatsApp or try again');
+      }
+    }).render('#paypal-button-container');
+  };
+
+  if (existing) {
+    renderButtons();
+  } else {
+    const script = document.createElement('script');
+    script.id = sdkId;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=GBP&intent=capture`;
+    script.onload = renderButtons;
+    document.head.appendChild(script);
+  }
+}
+
 function openCheckoutModal() {
   if (cart.length === 0) { showToast('Your cart is empty'); return; }
   buildCheckoutModal();
@@ -778,6 +854,9 @@ function openCheckoutModal() {
   const overlay = document.getElementById('checkoutOverlay');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Load PayPal button (no-op if client ID not configured)
+  loadPayPal();
 }
 
 function closeCheckoutModal() {
