@@ -725,38 +725,52 @@ function buildCheckoutModal() {
 
         <!-- Payment options -->
         <div class="checkout-section-title">Payment Method</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
 
-        <!-- Option 1: Card Payment (Stripe) -->
-        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;color:var(--text);">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Pay by Card
-          </div>
-          <div id="stripe-card-container" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
-          <button class="checkout-submit-btn" id="stripePayBtn" type="button" style="font-size:12px;padding:13px 20px;margin-top:12px;width:100%;">
-            Pay Now
-          </button>
+          <label id="pmLabelCard" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('card')">
+            <input type="radio" name="paymentMethod" value="card" style="accent-color:var(--oak);flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);">Pay by Card</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Visa · Mastercard · Amex</div>
+            </div>
+          </label>
+
+          <label id="pmLabelPaypal" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('paypal')">
+            <input type="radio" name="paymentMethod" value="paypal" style="accent-color:var(--oak);flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);">PayPal</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Pay via your PayPal account</div>
+            </div>
+          </label>
+
+          <label id="pmLabelCod" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('cod')">
+            <input type="radio" name="paymentMethod" value="cod" style="accent-color:var(--oak);flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--text);">Cash on Delivery</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Pay when your order arrives</div>
+            </div>
+          </label>
+
         </div>
 
-        <!-- Option 2: PayPal -->
-        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;color:var(--text);">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Pay Now — PayPal
-          </div>
+        <!-- Card panel -->
+        <div id="pmContentCard" style="display:none;margin-bottom:16px;">
+          <div id="stripe-card-container" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;margin-bottom:12px;"></div>
+          <button class="checkout-submit-btn" id="stripePayBtn" type="button" style="font-size:12px;padding:13px 20px;width:100%;">Pay Now</button>
+        </div>
+
+        <!-- PayPal panel -->
+        <div id="pmContentPaypal" style="display:none;margin-bottom:16px;">
           <div id="paypal-button-container" style="min-height:44px;"></div>
         </div>
 
-        <!-- Option 3: Cash on Delivery -->
-        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;">
-          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;color:var(--text);">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            Cash on Delivery
-          </div>
-          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Pay in cash when your order arrives.</div>
-          <button class="checkout-submit-btn" id="coSubmitBtn" type="button" style="font-size:12px;padding:13px 20px;">
-            Place Order (Pay on Delivery)
-          </button>
+        <!-- Cash on Delivery panel -->
+        <div id="pmContentCod" style="display:none;margin-bottom:16px;">
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Pay in cash when your order arrives.</p>
+          <button class="checkout-submit-btn" id="coSubmitBtn" type="button" style="font-size:12px;padding:13px 20px;width:100%;">Place Order — Pay on Delivery</button>
         </div>
 
         <p class="checkout-note">
@@ -963,6 +977,33 @@ function initStripeElement() {
   });
 }
 
+function selectPayment(method) {
+  // Check the right radio
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(r => {
+    r.checked = r.value === method;
+  });
+
+  // Highlight selected label, reset others
+  const labels = { card: 'pmLabelCard', paypal: 'pmLabelPaypal', cod: 'pmLabelCod' };
+  Object.entries(labels).forEach(([m, id]) => {
+    const lbl = document.getElementById(id);
+    if (!lbl) return;
+    lbl.style.borderColor = m === method ? 'var(--oak)' : 'var(--border)';
+    lbl.style.background  = m === method ? '#faf7f2' : '';
+  });
+
+  // Show matching content panel, hide others
+  const panels = { card: 'pmContentCard', paypal: 'pmContentPaypal', cod: 'pmContentCod' };
+  Object.entries(panels).forEach(([m, id]) => {
+    const panel = document.getElementById(id);
+    if (panel) panel.style.display = m === method ? '' : 'none';
+  });
+
+  // Load the relevant SDK on first selection
+  if (method === 'card')   loadStripe();
+  if (method === 'paypal') loadPayPal();
+}
+
 function openCheckoutModal() {
   if (cart.length === 0) { showToast('Your cart is empty'); return; }
   buildCheckoutModal();
@@ -984,15 +1025,20 @@ function openCheckoutModal() {
   document.getElementById('checkoutFormView').style.display = '';
   document.getElementById('checkoutSuccess').classList.remove('show');
 
+  // Reset payment selection so user picks fresh each time
+  ['pmContentCard','pmContentPaypal','pmContentCod'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  ['pmLabelCard','pmLabelPaypal','pmLabelCod'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.style.borderColor = 'var(--border)'; el.style.background = ''; }
+  });
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(r => r.checked = false);
+
   const overlay = document.getElementById('checkoutOverlay');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  // Load PayPal button (no-op if client ID not configured)
-  loadPayPal();
-
-  // Load Stripe card element (no-op if key not configured)
-  loadStripe();
 }
 
 function closeCheckoutModal() {
@@ -1010,6 +1056,21 @@ function validateCheckoutForm() {
     el.classList.remove('error');
     if (!el.value.trim()) { el.classList.add('error'); valid = false; }
   });
+
+  // Email format check
+  const emailEl = document.getElementById('coEmail');
+  if (emailEl && emailEl.value.trim()) {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim());
+    if (!emailOk) { emailEl.classList.add('error'); valid = false; }
+  }
+
+  // Phone: must be 7–15 digits (allows +, spaces, dashes, parens)
+  const phoneEl = document.getElementById('coPhone');
+  if (phoneEl && phoneEl.value.trim()) {
+    const digits = phoneEl.value.replace(/\D/g, '');
+    if (digits.length < 7 || digits.length > 15) { phoneEl.classList.add('error'); valid = false; }
+  }
+
   return valid;
 }
 
