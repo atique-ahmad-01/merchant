@@ -479,7 +479,7 @@ const CATEGORIES = [
 const STORE = {
   name:      'Uni Merchant Store',
   email:     'hello@unimerchant.store',
-  whatsapp:  '447438536580',          // international format, no +
+  whatsapp:  '447787675032',          // international format, no +
   // EmailJS credentials — sign up free at emailjs.com and replace these:
   emailjs: {
     publicKey:  'YOUR_EMAILJS_PUBLIC_KEY',   // Account > API Keys
@@ -715,7 +715,7 @@ function buildCheckoutModal() {
             </div>
             <div>
               <div class="notify-value">WhatsApp</div>
-              <div class="notify-label">+44 7438 536580</div>
+              <div class="notify-label">+44 7787 675032</div>
             </div>
           </div>
         </div>
@@ -739,7 +739,7 @@ function buildCheckoutModal() {
         <h2>Order Sent!</h2>
         <p>Your order has been sent to our WhatsApp and email.</p>
         <p>We'll confirm your order and delivery details within <strong>2 hours</strong>.</p>
-        <p style="margin-top:8px;">Questions? Message us on WhatsApp: <a href="https://wa.me/447438536580" style="color:var(--oak);font-weight:600;">+44 7438 536580</a></p>
+        <p style="margin-top:8px;">Questions? Message us on WhatsApp: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
         <button class="btn btn-oak" style="margin-top:28px;" onclick="closeCheckoutModal()">Continue Shopping</button>
       </div>
 

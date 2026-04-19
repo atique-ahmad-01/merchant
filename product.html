@@ -27,6 +27,124 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
     .related-section { background: var(--bg-alt); }
+
+    /* ── Image Zoom ── */
+    .gallery-main { position: relative; cursor: zoom-in; }
+    .gallery-main:hover::after {
+      content: '🔍';
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0,0,0,.55);
+      color: #fff;
+      font-size: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* Lightbox overlay */
+    .zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .zoom-overlay.open { display: flex; }
+
+    .zoom-img-wrap {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 90vw;
+      max-height: 80vh;
+      cursor: grab;
+    }
+    .zoom-img-wrap.grabbing { cursor: grabbing; }
+    .zoom-img-wrap img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      transform-origin: center center;
+      transition: transform .2s ease;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Zoom controls bar */
+    .zoom-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .zoom-btn {
+      background: rgba(255,255,255,.12);
+      border: 1.5px solid rgba(255,255,255,.25);
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+      line-height: 1;
+    }
+    .zoom-btn:hover { background: rgba(255,255,255,.25); }
+    .zoom-level {
+      color: rgba(255,255,255,.7);
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* Close button */
+    .zoom-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+      line-height: 1;
+      opacity: .7;
+      transition: opacity .2s;
+    }
+    .zoom-close:hover { opacity: 1; }
+
+    /* Thumbnail strip inside lightbox */
+    .zoom-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .zoom-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      opacity: .6;
+      transition: opacity .2s, border-color .2s;
+    }
+    .zoom-thumb.active { border-color: #fff; opacity: 1; }
+    .zoom-thumb img { width: 100%; height: 100%; object-fit: cover; }
   </style>
 </head>
 <body>
@@ -279,9 +397,24 @@
 </div>
 
 <!-- WhatsApp Float -->
-<a href="https://wa.me/447438536580" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+<a href="https://wa.me/447787675032" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" width="28" height="28"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#fff" stroke-width="0" fill-rule="evenodd"/></svg>
 </a>
+<!-- Zoom Lightbox -->
+<div class="zoom-overlay" id="zoomOverlay">
+  <button class="zoom-close" id="zoomClose" aria-label="Close">&times;</button>
+  <div class="zoom-img-wrap" id="zoomWrap">
+    <img id="zoomImg" src="" alt="Zoomed product image">
+  </div>
+  <div class="zoom-controls">
+    <button class="zoom-btn" id="zoomOut" title="Zoom out">&#8722;</button>
+    <span class="zoom-level" id="zoomLevel">100%</span>
+    <button class="zoom-btn" id="zoomIn" title="Zoom in">&#43;</button>
+    <button class="zoom-btn" id="zoomReset" title="Reset" style="font-size:14px;">&#8635;</button>
+  </div>
+  <div class="zoom-thumbs" id="zoomThumbs"></div>
+</div>
+
 <script src="assets/js/main.js"></script>
 <script>
   // Sync breadcrumb and desc long
@@ -299,6 +432,106 @@
     btn.classList.add('active');
     document.getElementById(tabId).classList.add('active');
   }
+
+  /* ── Image Zoom Lightbox ── */
+  let zoomScale = 1;
+  const ZOOM_STEP = 0.25;
+  const ZOOM_MAX  = 4;
+  const ZOOM_MIN  = 0.5;
+
+  const zoomOverlay = document.getElementById('zoomOverlay');
+  const zoomImg     = document.getElementById('zoomImg');
+  const zoomWrap    = document.getElementById('zoomWrap');
+  const zoomLevelEl = document.getElementById('zoomLevel');
+  const zoomThumbsEl= document.getElementById('zoomThumbs');
+
+  function openZoom(src) {
+    zoomImg.src = src;
+    zoomScale = 1;
+    applyZoom();
+    zoomOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeZoom() {
+    zoomOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function applyZoom() {
+    zoomImg.style.transform = `scale(${zoomScale})`;
+    zoomLevelEl.textContent = Math.round(zoomScale * 100) + '%';
+  }
+
+  document.getElementById('zoomIn').addEventListener('click', () => {
+    zoomScale = Math.min(ZOOM_MAX, +(zoomScale + ZOOM_STEP).toFixed(2));
+    applyZoom();
+  });
+  document.getElementById('zoomOut').addEventListener('click', () => {
+    zoomScale = Math.max(ZOOM_MIN, +(zoomScale - ZOOM_STEP).toFixed(2));
+    applyZoom();
+  });
+  document.getElementById('zoomReset').addEventListener('click', () => {
+    zoomScale = 1;
+    applyZoom();
+  });
+  document.getElementById('zoomClose').addEventListener('click', closeZoom);
+  zoomOverlay.addEventListener('click', e => { if (e.target === zoomOverlay) closeZoom(); });
+
+  // Mouse wheel zoom
+  zoomWrap.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomScale = e.deltaY < 0
+      ? Math.min(ZOOM_MAX, +(zoomScale + ZOOM_STEP).toFixed(2))
+      : Math.max(ZOOM_MIN, +(zoomScale - ZOOM_STEP).toFixed(2));
+    applyZoom();
+  }, { passive: false });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (!zoomOverlay.classList.contains('open')) return;
+    if (e.key === 'Escape')   closeZoom();
+    if (e.key === '+' || e.key === '=') { zoomScale = Math.min(ZOOM_MAX, +(zoomScale + ZOOM_STEP).toFixed(2)); applyZoom(); }
+    if (e.key === '-')        { zoomScale = Math.max(ZOOM_MIN, +(zoomScale - ZOOM_STEP).toFixed(2)); applyZoom(); }
+    if (e.key === '0')        { zoomScale = 1; applyZoom(); }
+  });
+
+  // Wire up main gallery image click after main.js loads
+  window.addEventListener('load', () => {
+    // Click main image to open zoom
+    const galleryMain = document.getElementById('galleryMain');
+    if (galleryMain) {
+      galleryMain.addEventListener('click', () => openZoom(galleryMain.src));
+    }
+
+    // Build zoom thumbnail strip from gallery thumbs
+    function rebuildZoomThumbs() {
+      const thumbImgs = document.querySelectorAll('.gallery-thumb img');
+      zoomThumbsEl.innerHTML = '';
+      thumbImgs.forEach((img, i) => {
+        const div = document.createElement('div');
+        div.className = 'zoom-thumb' + (i === 0 ? ' active' : '');
+        div.innerHTML = `<img src="${img.src}" alt="">`;
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.zoom-thumb').forEach(t => t.classList.remove('active'));
+          div.classList.add('active');
+          zoomImg.src = img.src;
+          zoomScale = 1;
+          applyZoom();
+          // Also update main gallery
+          if (galleryMain) galleryMain.src = img.src;
+        });
+        zoomThumbsEl.appendChild(div);
+      });
+    }
+
+    // Observe gallery thumbs being populated by main.js
+    const thumbsEl = document.getElementById('galleryThumbs');
+    if (thumbsEl) {
+      const obs = new MutationObserver(() => { rebuildZoomThumbs(); obs.disconnect(); });
+      obs.observe(thumbsEl, { childList: true });
+    }
+  });
 </script>
 </body>
 </html>
