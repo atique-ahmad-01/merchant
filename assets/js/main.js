@@ -480,6 +480,7 @@ const STORE = {
   name:      'Uni Merchant Store',
   email:     'hello@unimerchant.store',
   whatsapp:  '447787675032',          // international format, no +
+  stripePublishableKey: 'pk_test_51TNw1kBph80LnL2vCIesoGgA3jedNnoLIXK56RqpQA1zSW6ousAwaNhfscPJlvKgwKOtbSZGJn5BXy8lwzeGmICd007h17mqH1',
   // PayPal — sign up at developer.paypal.com, create a REST app, copy the Client ID:
   paypalClientId: 'AeDcIQYGVamPwHG89DZH5RgzIJDNRypIoGY4q6Dnv0G1UaT8vpHgyYnrwLa60sOSf6nw52TlVFL61OVV',
   // EmailJS credentials — sign up free at emailjs.com and replace these:
@@ -725,7 +726,19 @@ function buildCheckoutModal() {
         <!-- Payment options -->
         <div class="checkout-section-title">Payment Method</div>
 
-        <!-- Option 1: PayPal -->
+        <!-- Option 1: Card Payment (Stripe) -->
+        <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;color:var(--text);">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Pay by Card
+          </div>
+          <div id="stripe-card-container" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
+          <button class="checkout-submit-btn" id="stripePayBtn" type="button" style="font-size:12px;padding:13px 20px;margin-top:12px;width:100%;">
+            Pay Now
+          </button>
+        </div>
+
+        <!-- Option 2: PayPal -->
         <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;">
           <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;color:var(--text);">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -734,7 +747,7 @@ function buildCheckoutModal() {
           <div id="paypal-button-container" style="min-height:44px;"></div>
         </div>
 
-        <!-- Option 2: Cash on Delivery -->
+        <!-- Option 3: Cash on Delivery -->
         <div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;">
           <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;color:var(--text);">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;vertical-align:-2px;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -839,6 +852,117 @@ function loadPayPal() {
   }
 }
 
+function loadStripe() {
+  const key = STORE.stripePublishableKey;
+  if (!key) return;
+
+  if (window.Stripe) {
+    initStripeElement();
+    return;
+  }
+
+  const sdkId = 'stripe-sdk';
+  if (!document.getElementById(sdkId)) {
+    const script = document.createElement('script');
+    script.id = sdkId;
+    script.src = 'https://js.stripe.com/v3/';
+    script.onload = initStripeElement;
+    document.head.appendChild(script);
+  }
+}
+
+function initStripeElement() {
+  const container = document.getElementById('stripe-card-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const stripe = window.Stripe(STORE.stripePublishableKey);
+  const elements = stripe.elements();
+  const cardElement = elements.create('card', {
+    style: {
+      base: {
+        fontSize: '14px',
+        color: '#1a1a1a',
+        fontFamily: 'system-ui, sans-serif',
+        '::placeholder': { color: '#9ca3af' }
+      },
+      invalid: { color: '#e53e3e' }
+    }
+  });
+  cardElement.mount('#stripe-card-container');
+
+  // Update pay button with current total
+  const oldBtn = document.getElementById('stripePayBtn');
+  if (!oldBtn) return;
+  oldBtn.textContent = `Pay £${cartTotal().toFixed(2)}`;
+
+  // Clone to remove any previous event listeners
+  const btn = oldBtn.cloneNode(true);
+  oldBtn.parentNode.replaceChild(btn, oldBtn);
+
+  btn.addEventListener('click', async () => {
+    if (!validateCheckoutForm()) {
+      showToast('Please fill in your delivery details above');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    // 1. Create PaymentIntent via serverless function
+    let clientSecret;
+    try {
+      const resp = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: cartTotal() })
+      });
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+      clientSecret = data.clientSecret;
+    } catch (err) {
+      showToast('Payment setup failed — please try again');
+      btn.disabled = false;
+      btn.textContent = `Pay £${cartTotal().toFixed(2)}`;
+      return;
+    }
+
+    // 2. Confirm card payment
+    const customer = {
+      name:     document.getElementById('coName').value.trim(),
+      email:    document.getElementById('coEmail').value.trim(),
+      phone:    document.getElementById('coPhone').value.trim(),
+      address:  document.getElementById('coAddress').value.trim(),
+      city:     document.getElementById('coCity').value.trim(),
+      postcode: document.getElementById('coPostcode').value.trim(),
+      notes:    document.getElementById('coNotes').value.trim()
+    };
+
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: { name: customer.name, email: customer.email }
+      }
+    });
+
+    if (error) {
+      showToast(error.message || 'Payment failed — please try again');
+      btn.disabled = false;
+      btn.textContent = `Pay £${cartTotal().toFixed(2)}`;
+      return;
+    }
+
+    if (paymentIntent.status === 'succeeded') {
+      const msg = formatOrderMessage(customer, 'Card ✅ Paid via Stripe');
+      window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
+      cart = [];
+      saveCart();
+      document.getElementById('checkoutFormView').style.display = 'none';
+      document.getElementById('checkoutSuccess').classList.add('show');
+    }
+  });
+}
+
 function openCheckoutModal() {
   if (cart.length === 0) { showToast('Your cart is empty'); return; }
   buildCheckoutModal();
@@ -866,6 +990,9 @@ function openCheckoutModal() {
 
   // Load PayPal button (no-op if client ID not configured)
   loadPayPal();
+
+  // Load Stripe card element (no-op if key not configured)
+  loadStripe();
 }
 
 function closeCheckoutModal() {

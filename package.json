@@ -1,0 +1,8 @@
+{
+  "name": "uni-merchant-store",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "stripe": "^14.21.0"
+  }
+}
