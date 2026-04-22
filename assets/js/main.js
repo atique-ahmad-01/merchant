@@ -480,7 +480,7 @@ const STORE = {
   name:      'Uni Merchant Store',
   email:     'hello@unimerchant.store',
   whatsapp:  '447787675032',          // international format, no +
-  stripePublishableKey: 'pk_live_YOUR_LIVE_PUBLISHABLE_KEY',
+  stripePublishableKey: 'pk_live_51TNw1VBXown5YKmd4Fnh4Z9FjgAko4BeXsvgf6IutcUAZMqH2hyv38eTcmNJHo554yPwSvmTSkWwtHP8ySm7R1Sm006hkNfTIQ',
   // PayPal — sign up at developer.paypal.com, create a REST app, copy the Client ID:
   paypalClientId: 'AeDcIQYGVamPwHG89DZH5RgzIJDNRypIoGY4q6Dnv0G1UaT8vpHgyYnrwLa60sOSf6nw52TlVFL61OVV',
   // EmailJS credentials — sign up free at emailjs.com and replace these:
