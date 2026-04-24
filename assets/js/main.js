@@ -745,32 +745,30 @@ function buildCheckoutModal() {
             </div>
           </label>
 
-          <label id="pmLabelCod" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('cod')">
-            <input type="radio" name="paymentMethod" value="cod" style="accent-color:var(--oak);flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text);">Cash on Delivery</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Pay when your order arrives</div>
-            </div>
-          </label>
-
         </div>
 
         <!-- Card panel -->
         <div id="pmContentCard" style="display:none;margin-bottom:16px;">
-          <div id="stripe-card-container" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;margin-bottom:12px;"></div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">Card Number</label>
+            <div id="stripe-card-number" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">Expiry Date</label>
+              <div id="stripe-card-expiry" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
+            </div>
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">CVV / CVC</label>
+              <div id="stripe-card-cvc" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
+            </div>
+          </div>
           <button class="checkout-submit-btn" id="stripePayBtn" type="button" style="font-size:12px;padding:13px 20px;width:100%;">Pay Now</button>
         </div>
 
         <!-- PayPal panel -->
         <div id="pmContentPaypal" style="display:none;margin-bottom:16px;">
           <div id="paypal-button-container" style="min-height:44px;"></div>
-        </div>
-
-        <!-- Cash on Delivery panel -->
-        <div id="pmContentCod" style="display:none;margin-bottom:16px;">
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Pay in cash when your order arrives.</p>
-          <button class="checkout-submit-btn" id="coSubmitBtn" type="button" style="font-size:12px;padding:13px 20px;width:100%;">Place Order — Pay on Delivery</button>
         </div>
 
         <p class="checkout-note">
@@ -783,11 +781,15 @@ function buildCheckoutModal() {
         <div class="success-icon">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h2>Order Placed!</h2>
-        <p>Your order has been sent to our WhatsApp.</p>
-        <p>We'll confirm your order and delivery details within <strong>2 hours</strong>.</p>
-        <p style="margin-top:8px;">Questions? Message us on WhatsApp: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
-        <button class="btn btn-oak" style="margin-top:28px;" onclick="closeCheckoutModal()">Continue Shopping</button>
+        <h2>Payment Approved!</h2>
+        <div id="successPaymentBadge" style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#16a34a;margin:8px 0 16px;"></div>
+        <p id="successOrderRef" style="font-size:13px;color:var(--text-muted);margin-bottom:4px;"></p>
+        <p>Your order confirmation has been sent to our WhatsApp — we will reach out to you within <strong>2 hours</strong> to confirm delivery.</p>
+        <div style="margin-top:16px;padding:14px;background:#faf7f2;border-radius:8px;border:1px solid var(--border);text-align:left;">
+          <p style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Need help?</p>
+          <p style="font-size:13px;color:var(--text-muted);margin:0;">Message us on WhatsApp: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
+        </div>
+        <button class="btn btn-oak" style="margin-top:24px;width:100%;" onclick="closeCheckoutModal()">Continue Shopping</button>
       </div>
 
     </div>`;
@@ -797,8 +799,6 @@ function buildCheckoutModal() {
   document.getElementById('closeCheckout').addEventListener('click', closeCheckoutModal);
   el.addEventListener('click', (e) => { if (e.target === el) closeCheckoutModal(); });
 
-  // Cash on Delivery submit
-  document.getElementById('coSubmitBtn').addEventListener('click', submitOrder);
 }
 
 function loadPayPal() {
@@ -844,6 +844,10 @@ function loadPayPal() {
           window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
           cart = [];
           saveCart();
+          const badge = document.getElementById('successPaymentBadge');
+          if (badge) badge.textContent = '✓ PayPal Payment Approved';
+          const refEl = document.getElementById('successOrderRef');
+          if (refEl) refEl.textContent = `Order Ref: ${msg.ref}`;
           document.getElementById('checkoutFormView').style.display = 'none';
           document.getElementById('checkoutSuccess').classList.add('show');
         });
@@ -886,25 +890,34 @@ function loadStripe() {
 }
 
 function initStripeElement() {
-  const container = document.getElementById('stripe-card-container');
-  if (!container) return;
-  container.innerHTML = '';
+  if (!document.getElementById('stripe-card-number')) return;
+
+  const elementStyle = {
+    base: {
+      fontSize: '14px',
+      color: '#1a1a1a',
+      fontFamily: 'system-ui, sans-serif',
+      '::placeholder': { color: '#9ca3af' }
+    },
+    invalid: { color: '#e53e3e' }
+  };
 
   const stripe = window.Stripe(STORE.stripePublishableKey);
   const elements = stripe.elements();
-  const cardElement = elements.create('card', {
-    hidePostalCode: true,
-    style: {
-      base: {
-        fontSize: '14px',
-        color: '#1a1a1a',
-        fontFamily: 'system-ui, sans-serif',
-        '::placeholder': { color: '#9ca3af' }
-      },
-      invalid: { color: '#e53e3e' }
-    }
+
+  // Clear previous mounts
+  ['stripe-card-number','stripe-card-expiry','stripe-card-cvc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
   });
-  cardElement.mount('#stripe-card-container');
+
+  const cardNumber = elements.create('cardNumber', { style: elementStyle, showIcon: true });
+  const cardExpiry = elements.create('cardExpiry', { style: elementStyle });
+  const cardCvc    = elements.create('cardCvc',    { style: elementStyle });
+
+  cardNumber.mount('#stripe-card-number');
+  cardExpiry.mount('#stripe-card-expiry');
+  cardCvc.mount('#stripe-card-cvc');
 
   // Update pay button with current total
   const oldBtn = document.getElementById('stripePayBtn');
@@ -955,7 +968,7 @@ function initStripeElement() {
 
     const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: cardElement,
+        card: cardNumber,
         billing_details: { name: customer.name, email: customer.email }
       }
     });
@@ -972,6 +985,11 @@ function initStripeElement() {
       window.open(`https://wa.me/${STORE.whatsapp}?text=${msg.whatsapp}`, '_blank');
       cart = [];
       saveCart();
+      // Update success screen
+      const badge = document.getElementById('successPaymentBadge');
+      if (badge) badge.textContent = '✓ Card Payment Approved';
+      const refEl = document.getElementById('successOrderRef');
+      if (refEl) refEl.textContent = `Order Ref: ${msg.ref}`;
       document.getElementById('checkoutFormView').style.display = 'none';
       document.getElementById('checkoutSuccess').classList.add('show');
     }
@@ -985,7 +1003,7 @@ function selectPayment(method) {
   });
 
   // Highlight selected label, reset others
-  const labels = { card: 'pmLabelCard', paypal: 'pmLabelPaypal', cod: 'pmLabelCod' };
+  const labels = { card: 'pmLabelCard', paypal: 'pmLabelPaypal' };
   Object.entries(labels).forEach(([m, id]) => {
     const lbl = document.getElementById(id);
     if (!lbl) return;
@@ -994,7 +1012,7 @@ function selectPayment(method) {
   });
 
   // Show matching content panel, hide others
-  const panels = { card: 'pmContentCard', paypal: 'pmContentPaypal', cod: 'pmContentCod' };
+  const panels = { card: 'pmContentCard', paypal: 'pmContentPaypal' };
   Object.entries(panels).forEach(([m, id]) => {
     const panel = document.getElementById(id);
     if (panel) panel.style.display = m === method ? '' : 'none';
@@ -1027,11 +1045,11 @@ function openCheckoutModal() {
   document.getElementById('checkoutSuccess').classList.remove('show');
 
   // Reset payment selection so user picks fresh each time
-  ['pmContentCard','pmContentPaypal','pmContentCod'].forEach(id => {
+  ['pmContentCard','pmContentPaypal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
-  ['pmLabelCard','pmLabelPaypal','pmLabelCod'].forEach(id => {
+  ['pmLabelCard','pmLabelPaypal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.style.borderColor = 'var(--border)'; el.style.background = ''; }
   });
