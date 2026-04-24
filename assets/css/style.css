@@ -1086,8 +1086,20 @@ h4 { font-size: 1rem; }
   transition: border-color var(--transition);
 }
 .checkout-form-group input:focus,
-.checkout-form-group textarea:focus { border-color: var(--oak); }
-.checkout-form-group input.error { border-color: var(--red); }
+.checkout-form-group textarea:focus { border-color: var(--oak); box-shadow: 0 0 0 3px rgba(139,100,60,.08); }
+.checkout-form-group input.error  { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229,62,62,.08); }
+.checkout-form-group input.valid  { border-color: #25D366; box-shadow: 0 0 0 3px rgba(37,211,102,.08); }
+
+/* Inline field hints */
+.field-hint {
+  font-size: 11px;
+  margin-top: 4px;
+  display: block;
+  min-height: 14px;
+  transition: color .2s;
+}
+.hint-ok  { color: #16a34a; }
+.hint-err { color: #e53e3e; }
 
 .checkout-notify-methods {
   display: grid;
@@ -1188,11 +1200,184 @@ h4 { font-size: 1rem; }
 .checkout-success h2 { margin-bottom: 12px; }
 .checkout-success p { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 8px; }
 
+/* Step progress bar */
+.checkout-stepper {
+  display: flex;
+  align-items: center;
+  padding: 14px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.4;
+  transition: opacity .3s;
+}
+.stepper-step.active { opacity: 1; }
+.step-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .3s, color .3s;
+}
+.stepper-step.active .step-dot { background: var(--oak); color: #fff; }
+.stepper-step.done .step-dot { background: #25D366; color: #fff; }
+.step-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.stepper-step.active .step-label { color: var(--oak); }
+.stepper-line {
+  flex: 1; height: 2px;
+  background: var(--border);
+  margin: 0 8px; margin-bottom: 18px;
+  transition: background .3s;
+}
+.stepper-line.active { background: var(--oak); }
+
+/* Back button */
+.co-back-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: none; border: none;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer; padding: 4px 0;
+  font-family: var(--font-body);
+  transition: color .15s;
+}
+.co-back-btn:hover { color: var(--oak); }
+
+/* Continue button */
+.checkout-next-btn {
+  width: 100%; padding: 16px;
+  font-size: 14px; font-weight: 700; letter-spacing: .06em;
+  background: var(--oak); color: #fff;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; border: none;
+  font-family: var(--font-body);
+  transition: background var(--transition), transform .15s ease;
+}
+.checkout-next-btn:hover { background: var(--oak-dark); transform: translateY(-1px); }
+
+/* Payment method labels */
+.pm-label {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: border-color .15s, background .15s;
+}
+.pm-label.selected { border-color: var(--oak); background: #faf7f2; }
+.pm-icon {
+  width: 38px; height: 38px;
+  background: var(--bg-alt);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pm-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.pm-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Stripe field wrappers */
+.stripe-field-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 6px; display: block;
+}
+.stripe-field {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+  background: #fff;
+  min-height: 46px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.stripe-field:focus-within { border-color: var(--oak); box-shadow: 0 0 0 3px rgba(139,100,60,.08); }
+input.stripe-field:focus  { border-color: var(--oak); box-shadow: 0 0 0 3px rgba(139,100,60,.08); outline: none; }
+
+/* Mini recap on payment step */
+.co-recap {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.co-recap-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-muted);
+}
+.co-recap-total {
+  font-weight: 700; color: var(--text);
+  padding-top: 6px; margin-top: 2px;
+  border-top: 1px solid var(--border);
+}
+
 @media (max-width: 600px) {
   .checkout-form-grid { grid-template-columns: 1fr; }
   .checkout-notify-methods { grid-template-columns: 1fr; }
   .checkout-modal-body { padding: 24px 20px; }
   .checkout-modal-header { padding: 20px; }
+  .checkout-stepper { padding: 12px 20px; }
+}
+
+/* ── OTP Verification ── */
+.otp-icon {
+  width: 64px; height: 64px;
+  background: #f0f4ff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 4px;
+  color: var(--oak);
+}
+.otp-boxes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.otp-box {
+  width: 48px; height: 56px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 24px; font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  font-family: var(--font-body);
+}
+.otp-box:focus { border-color: var(--oak); box-shadow: 0 0 0 3px rgba(139,100,60,.1); }
+.otp-box.filled { border-color: var(--oak); background: #faf7f2; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60%  { transform: translateX(-6px); }
+  40%,80%  { transform: translateX(6px); }
+}
+.shake { animation: shake .4s ease; }
+
+.co-resend-btn {
+  background: none; border: none;
+  font-size: 13px; color: var(--text-muted);
+  cursor: pointer; padding: 4px;
+  font-family: var(--font-body);
+}
+.co-resend-btn:hover { color: var(--text); }
+
+@media (max-width: 400px) {
+  .otp-box { width: 40px; height: 50px; font-size: 20px; }
+  .otp-boxes { gap: 6px; }
 }
 
 /* ── WhatsApp Float Button ── */

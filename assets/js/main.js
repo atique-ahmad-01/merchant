@@ -652,142 +652,198 @@ function buildCheckoutModal() {
 
       <!-- Header -->
       <div class="checkout-modal-header">
-        <h2>Complete Your Order</h2>
+        <button class="co-back-btn" id="checkoutBackBtn" onclick="checkoutBack()" style="visibility:hidden;">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+        <h2 id="checkoutHeaderTitle">Your Order</h2>
         <button class="close-btn" id="closeCheckout">&times;</button>
       </div>
 
-      <!-- Form view -->
-      <div class="checkout-modal-body" id="checkoutFormView">
-
-        <!-- Order summary -->
-        <div class="checkout-section-title">Order Summary</div>
-        <div class="checkout-order-summary" id="coOrderLines"></div>
-        <div class="checkout-total-row">
-          <span>Total <span class="delivery-tag">FREE DELIVERY</span></span>
-          <span id="coTotal">£0.00</span>
+      <!-- Step progress bar -->
+      <div class="checkout-stepper">
+        <div class="stepper-step active" id="stepDot1">
+          <div class="step-dot">1</div>
+          <div class="step-label">Review</div>
         </div>
-
-        <!-- Customer details -->
-        <div class="checkout-section-title">Your Details</div>
-        <div class="checkout-form-grid" style="margin-bottom:20px;">
-          <div class="checkout-form-group">
-            <label for="coName">Full Name *</label>
-            <input type="text" id="coName" placeholder="John Smith" required>
-          </div>
-          <div class="checkout-form-group">
-            <label for="coEmail">Email Address *</label>
-            <input type="email" id="coEmail" placeholder="john@example.com" required>
-          </div>
-          <div class="checkout-form-group">
-            <label for="coPhone">Phone / WhatsApp *</label>
-            <input type="tel" id="coPhone" placeholder="+44 7XXX XXXXXX" required>
-          </div>
-          <div class="checkout-form-group">
-            <label for="coCity">City *</label>
-            <input type="text" id="coCity" placeholder="London" required>
-          </div>
-          <div class="checkout-form-group full">
-            <label for="coAddress">Delivery Address *</label>
-            <input type="text" id="coAddress" placeholder="123 High Street, Flat 2" required>
-          </div>
-          <div class="checkout-form-group">
-            <label for="coPostcode">Postcode *</label>
-            <input type="text" id="coPostcode" placeholder="SW1A 1AA" required>
-          </div>
-          <div class="checkout-form-group">
-            <label for="coNotes">Order Notes (optional)</label>
-            <input type="text" id="coNotes" placeholder="Any special instructions…">
-          </div>
+        <div class="stepper-line" id="stepLine1"></div>
+        <div class="stepper-step" id="stepDot2">
+          <div class="step-dot">2</div>
+          <div class="step-label">Delivery</div>
         </div>
-
-        <!-- Where you'll receive confirmation -->
-        <div class="checkout-section-title">Order Confirmation</div>
-        <div class="checkout-notify-methods" style="margin-bottom:24px;">
-          <div class="notify-card email-card">
-            <div class="notify-icon email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--oak)" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <div class="notify-value">Email</div>
-              <div class="notify-label">hello@unimerchant.store</div>
-            </div>
-          </div>
-          <div class="notify-card wa-card">
-            <div class="notify-icon whatsapp">
-              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.3 6.3 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#25D366" d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.308A9.944 9.944 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-            </div>
-            <div>
-              <div class="notify-value">WhatsApp</div>
-              <div class="notify-label">+44 7787 675032</div>
-            </div>
-          </div>
+        <div class="stepper-line" id="stepLine2"></div>
+        <div class="stepper-step" id="stepDot3">
+          <div class="step-dot">3</div>
+          <div class="step-label">Payment</div>
         </div>
-
-        <!-- Payment options -->
-        <div class="checkout-section-title">Payment Method</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-
-          <label id="pmLabelCard" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('card')">
-            <input type="radio" name="paymentMethod" value="card" style="accent-color:var(--oak);flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text);">Pay by Card</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Visa · Mastercard · Amex</div>
-            </div>
-          </label>
-
-          <label id="pmLabelPaypal" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;" onclick="selectPayment('paypal')">
-            <input type="radio" name="paymentMethod" value="paypal" style="accent-color:var(--oak);flex-shrink:0;">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text);">PayPal</div>
-              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Pay via your PayPal account</div>
-            </div>
-          </label>
-
-        </div>
-
-        <!-- Card panel -->
-        <div id="pmContentCard" style="display:none;margin-bottom:16px;">
-          <div style="margin-bottom:10px;">
-            <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">Card Number</label>
-            <div id="stripe-card-number" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-            <div>
-              <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">Expiry Date</label>
-              <div id="stripe-card-expiry" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
-            </div>
-            <div>
-              <label style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px;display:block;">CVV / CVC</label>
-              <div id="stripe-card-cvc" style="border:1px solid var(--border);border-radius:6px;padding:11px 12px;background:#fff;min-height:44px;"></div>
-            </div>
-          </div>
-          <button class="checkout-submit-btn" id="stripePayBtn" type="button" style="font-size:12px;padding:13px 20px;width:100%;">Pay Now</button>
-        </div>
-
-        <!-- PayPal panel -->
-        <div id="pmContentPaypal" style="display:none;margin-bottom:16px;">
-          <div id="paypal-button-container" style="min-height:44px;"></div>
-        </div>
-
-        <p class="checkout-note">
-          Your order details will be sent to our WhatsApp. We'll confirm delivery within 2 hours.
-        </p>
       </div>
 
-      <!-- Success view -->
+      <!-- STEP 1: Review Order -->
+      <div class="checkout-step" id="checkoutStep1">
+        <div class="checkout-modal-body">
+          <div class="checkout-order-summary" id="coOrderLines"></div>
+          <div class="checkout-total-row" style="margin-bottom:24px;">
+            <span>Total <span class="delivery-tag">FREE DELIVERY</span></span>
+            <span id="coTotal">£0.00</span>
+          </div>
+          <button class="checkout-next-btn" type="button" onclick="checkoutNext(1)">
+            Continue to Delivery
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Delivery Details -->
+      <div class="checkout-step" id="checkoutStep2" style="display:none;">
+        <div class="checkout-modal-body">
+          <div class="checkout-form-grid" style="margin-bottom:24px;">
+            <div class="checkout-form-group">
+              <label for="coName">Full Name *</label>
+              <input type="text" id="coName" placeholder="John Smith" required>
+            </div>
+            <div class="checkout-form-group">
+              <label for="coEmail">Email Address *</label>
+              <input type="email" id="coEmail" placeholder="john@example.com" required>
+            </div>
+            <div class="checkout-form-group">
+              <label for="coPhone">Phone / WhatsApp *</label>
+              <input type="tel" id="coPhone" placeholder="+44 7XXX XXXXXX" required>
+            </div>
+            <div class="checkout-form-group">
+              <label for="coCity">City *</label>
+              <input type="text" id="coCity" placeholder="London" required>
+            </div>
+            <div class="checkout-form-group full">
+              <label for="coAddress">Delivery Address *</label>
+              <input type="text" id="coAddress" placeholder="123 High Street, Flat 2" required>
+            </div>
+            <div class="checkout-form-group">
+              <label for="coPostcode">Postcode *</label>
+              <input type="text" id="coPostcode" placeholder="SW1A 1AA" required>
+            </div>
+            <div class="checkout-form-group">
+              <label for="coNotes">Notes (optional)</label>
+              <input type="text" id="coNotes" placeholder="Any special instructions…">
+            </div>
+          </div>
+          <button class="checkout-next-btn" type="button" onclick="checkoutNext(2)">
+            Continue to Payment
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Payment -->
+      <div class="checkout-step" id="checkoutStep3" style="display:none;">
+        <div class="checkout-modal-body">
+
+          <!-- Mini summary recap -->
+          <div class="co-recap" id="coRecap"></div>
+
+          <!-- Payment method selection -->
+          <div class="checkout-section-title">Choose Payment Method</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+
+            <label id="pmLabelCard" class="pm-label" onclick="selectPayment('card')">
+              <input type="radio" name="paymentMethod" value="card" style="accent-color:var(--oak);flex-shrink:0;">
+              <div class="pm-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <div>
+                <div class="pm-title">Pay by Card</div>
+                <div class="pm-sub">Visa · Mastercard · Amex — secured by Stripe</div>
+              </div>
+            </label>
+
+            <label id="pmLabelPaypal" class="pm-label" onclick="selectPayment('paypal')">
+              <input type="radio" name="paymentMethod" value="paypal" style="accent-color:var(--oak);flex-shrink:0;">
+              <div class="pm-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11.5C7 14 9 16 11.5 16H13c2.8 0 5-2.2 5-5s-2.2-5-5-5H8L7 11.5z"/><path d="M4 14.5C4 17 6 19 8.5 19H10c2.8 0 5-2.2 5-5"/></svg>
+              </div>
+              <div>
+                <div class="pm-title">PayPal</div>
+                <div class="pm-sub">Pay securely via your PayPal account</div>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Card fields (shown when card selected) -->
+          <div id="pmContentCard" style="display:none;margin-bottom:8px;">
+            <div style="margin-bottom:14px;">
+              <label class="stripe-field-label">Name on Card</label>
+              <input type="text" id="cardHolderName" class="stripe-field" placeholder="As it appears on your card"
+                style="font-size:14px;font-family:inherit;color:#1a1a1a;width:100%;box-sizing:border-box;outline:none;">
+            </div>
+            <div style="margin-bottom:14px;">
+              <label class="stripe-field-label">Card Number</label>
+              <div id="stripe-card-number" class="stripe-field"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+              <div>
+                <label class="stripe-field-label">Expiry Date</label>
+                <div id="stripe-card-expiry" class="stripe-field"></div>
+              </div>
+              <div>
+                <label class="stripe-field-label">Security Code (CVV)</label>
+                <div id="stripe-card-cvc" class="stripe-field"></div>
+              </div>
+            </div>
+            <button class="checkout-submit-btn" id="stripePayBtn" type="button">Pay £0.00</button>
+            <p class="checkout-note" style="margin-top:10px;">🔒 Your card details are encrypted and never stored</p>
+          </div>
+
+          <!-- PayPal (shown when paypal selected) -->
+          <div id="pmContentPaypal" style="display:none;margin-bottom:8px;">
+            <div id="paypal-button-container" style="min-height:52px;"></div>
+            <p class="checkout-note" style="margin-top:10px;">🔒 You will be redirected to PayPal to complete payment securely</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- OTP Verification screen -->
+      <div class="checkout-otp-screen" id="checkoutOtp" style="display:none;">
+        <div class="checkout-modal-body" style="text-align:center;padding-top:40px;padding-bottom:40px;">
+          <div class="otp-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3 id="otpTitle" style="font-size:18px;margin:16px 0 8px;">Enter Verification Code</h3>
+          <p id="otpSubtitle" style="font-size:13px;color:var(--text-muted);margin-bottom:28px;line-height:1.6;"></p>
+
+          <!-- 6-digit boxes -->
+          <div class="otp-boxes" id="otpBoxes">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]">
+          </div>
+
+          <p id="otpError" style="font-size:13px;color:#e53e3e;min-height:20px;margin:12px 0;"></p>
+
+          <button class="checkout-next-btn" id="otpVerifyBtn" type="button" style="margin-bottom:14px;" onclick="submitOtp()">
+            Verify Code
+          </button>
+          <button class="co-resend-btn" id="otpResendBtn" type="button" onclick="resendOtp()">
+            Didn't receive it? <span style="color:var(--oak);font-weight:600;">Resend code</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Success screen -->
       <div class="checkout-success" id="checkoutSuccess">
         <div class="success-icon">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h2>Payment Approved!</h2>
-        <div id="successPaymentBadge" style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#16a34a;margin:8px 0 16px;"></div>
-        <p id="successOrderRef" style="font-size:13px;color:var(--text-muted);margin-bottom:4px;"></p>
-        <p>Your order confirmation has been sent to our WhatsApp — we will reach out to you within <strong>2 hours</strong> to confirm delivery.</p>
-        <div style="margin-top:16px;padding:14px;background:#faf7f2;border-radius:8px;border:1px solid var(--border);text-align:left;">
-          <p style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">Need help?</p>
-          <p style="font-size:13px;color:var(--text-muted);margin:0;">Message us on WhatsApp: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
+        <div id="successPaymentBadge" style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:20px;padding:6px 18px;font-size:13px;font-weight:700;color:#16a34a;margin:10px 0 18px;"></div>
+        <p id="successOrderRef" style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px;"></p>
+        <p>Your order has been confirmed and sent to our WhatsApp. We'll contact you within <strong>2 hours</strong> to arrange delivery.</p>
+        <div style="margin-top:20px;padding:16px;background:#faf7f2;border-radius:var(--radius);border:1px solid var(--border);text-align:left;">
+          <p style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--oak);margin-bottom:6px;">Questions?</p>
+          <p style="font-size:13px;color:var(--text-muted);margin:0;">WhatsApp us anytime: <a href="https://wa.me/447787675032" style="color:var(--oak);font-weight:600;">+44 7787 675032</a></p>
         </div>
         <button class="btn btn-oak" style="margin-top:24px;width:100%;" onclick="closeCheckoutModal()">Continue Shopping</button>
       </div>
@@ -795,10 +851,341 @@ function buildCheckoutModal() {
     </div>`;
   document.body.appendChild(el);
 
-  // Close handlers
   document.getElementById('closeCheckout').addEventListener('click', closeCheckoutModal);
   el.addEventListener('click', (e) => { if (e.target === el) closeCheckoutModal(); });
+  initFormValidation();
+}
 
+function setFieldState(id, state, msg) {
+  // state: 'valid' | 'error' | 'idle'
+  const input = document.getElementById(id);
+  if (!input) return;
+  const group = input.closest('.checkout-form-group');
+  if (!group) return;
+
+  input.classList.remove('error', 'valid');
+  let hint = group.querySelector('.field-hint');
+  if (!hint) {
+    hint = document.createElement('span');
+    hint.className = 'field-hint';
+    group.appendChild(hint);
+  }
+
+  if (state === 'valid') {
+    input.classList.add('valid');
+    hint.textContent = '✓ ' + (msg || 'Looks good');
+    hint.className = 'field-hint hint-ok';
+  } else if (state === 'error') {
+    input.classList.add('error');
+    hint.textContent = msg || 'Required';
+    hint.className = 'field-hint hint-err';
+  } else {
+    hint.textContent = '';
+    hint.className = 'field-hint';
+  }
+}
+
+function initFormValidation() {
+  const rules = {
+    coName: {
+      validate: v => v.trim().length >= 2,
+      ok: 'Name confirmed',
+      err: 'Please enter your full name'
+    },
+    coEmail: {
+      validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+      ok: 'Valid email address',
+      err: 'Enter a valid email e.g. john@example.com'
+    },
+    coPhone: {
+      validate: v => { const d = v.replace(/\D/g,''); return d.length >= 7 && d.length <= 15; },
+      ok: 'Valid phone number',
+      err: 'Enter a valid phone number (7–15 digits)'
+    },
+    coCity: {
+      validate: v => v.trim().length >= 2,
+      ok: 'City confirmed',
+      err: 'Please enter your city'
+    },
+    coAddress: {
+      validate: v => v.trim().length >= 5,
+      ok: 'Address confirmed',
+      err: 'Please enter your full delivery address'
+    },
+    coPostcode: {
+      validate: v => v.trim().length >= 3,
+      ok: 'Postcode confirmed',
+      err: 'Please enter a valid postcode'
+    }
+  };
+
+  Object.entries(rules).forEach(([id, rule]) => {
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    // Validate on every keystroke (debounced for smooth UX)
+    let timer;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      const v = input.value;
+      if (!v) { setFieldState(id, 'idle'); return; }
+      timer = setTimeout(() => {
+        if (rule.validate(v)) {
+          setFieldState(id, 'valid', rule.ok);
+        } else {
+          setFieldState(id, 'error', rule.err);
+        }
+      }, 400);
+    });
+
+    // Immediate check on blur (when user leaves the field)
+    input.addEventListener('blur', () => {
+      const v = input.value;
+      if (!v) {
+        setFieldState(id, 'error', 'This field is required');
+        return;
+      }
+      if (rule.validate(v)) {
+        setFieldState(id, 'valid', rule.ok);
+      } else {
+        setFieldState(id, 'error', rule.err);
+      }
+    });
+  });
+}
+
+function goToStep(n) {
+  [1, 2, 3].forEach(i => {
+    const step = document.getElementById(`checkoutStep${i}`);
+    if (step) step.style.display = i === n ? '' : 'none';
+    const dot = document.getElementById(`stepDot${i}`);
+    if (dot) {
+      dot.classList.toggle('active', i <= n);
+      dot.classList.toggle('done', i < n);
+    }
+    if (i < 3) {
+      const line = document.getElementById(`stepLine${i}`);
+      if (line) line.classList.toggle('active', i < n);
+    }
+  });
+  const titles = { 1: 'Your Order', 2: 'Delivery Details', 3: 'Payment' };
+  const titleEl = document.getElementById('checkoutHeaderTitle');
+  if (titleEl) titleEl.textContent = titles[n];
+  const backBtn = document.getElementById('checkoutBackBtn');
+  if (backBtn) backBtn.style.visibility = n > 1 ? 'visible' : 'hidden';
+  document.getElementById('checkoutModal')?.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function checkoutNext(fromStep) {
+  if (fromStep === 2) {
+    if (!validateCheckoutForm()) {
+      showToast('Please fill in all required fields');
+      return;
+    }
+    // Trigger OTP verification for email + phone
+    await startOtpVerification();
+    return;
+  }
+  goToStep(fromStep + 1);
+}
+
+function checkoutBack() {
+  // If on OTP screen, go back to step 2
+  const otpScreen = document.getElementById('checkoutOtp');
+  if (otpScreen && otpScreen.style.display !== 'none') {
+    otpScreen.style.display = 'none';
+    document.getElementById('checkoutStep2').style.display = '';
+    goToStep(2);
+    return;
+  }
+  for (let i = 3; i >= 2; i--) {
+    const s = document.getElementById(`checkoutStep${i}`);
+    if (s && s.style.display !== 'none') {
+      if (i === 3) {
+        ['pmContentCard','pmContentPaypal'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        ['pmLabelCard','pmLabelPaypal'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('selected');
+        });
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(r => r.checked = false);
+      }
+      goToStep(i - 1);
+      return;
+    }
+  }
+}
+
+/* ── OTP — simple email verification via EmailJS ── */
+let _otpCode   = null;   // the 6-digit code we generated
+let _otpExpiry = null;   // when it expires
+let _otpEmail  = null;   // who we sent it to
+
+function loadEmailJS() {
+  if (window.emailjs) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+async function startOtpVerification() {
+  const email = document.getElementById('coEmail')?.value.trim();
+  if (!email) { proceedToPayment(); return; }
+
+  // Check EmailJS is configured
+  const ejs = STORE.emailjs;
+  if (!ejs.publicKey || ejs.publicKey.startsWith('YOUR_')) {
+    // EmailJS not set up — skip verification and proceed
+    proceedToPayment();
+    return;
+  }
+
+  _otpCode   = String(Math.floor(100000 + Math.random() * 900000));
+  _otpExpiry = Date.now() + 10 * 60 * 1000; // 10 min
+  _otpEmail  = email;
+
+  // Show OTP screen
+  document.getElementById('checkoutStep2').style.display = 'none';
+  document.getElementById('checkoutOtp').style.display = '';
+  document.getElementById('checkoutBackBtn').style.visibility = 'visible';
+  document.getElementById('otpTitle').textContent = 'Verify your Email';
+  document.getElementById('otpSubtitle').textContent =
+    `We sent a 6-digit code to ${email}. Enter it below to confirm your email address.`;
+  document.getElementById('otpError').textContent = '';
+
+  const boxes = document.querySelectorAll('.otp-box');
+  boxes.forEach(b => { b.value = ''; b.classList.remove('filled'); });
+  initOtpBoxes();
+  boxes[0]?.focus();
+
+  const btn = document.getElementById('otpVerifyBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending code…';
+
+  try {
+    await loadEmailJS();
+    emailjs.init({ publicKey: ejs.publicKey });
+    await emailjs.send(ejs.serviceId, ejs.templateId, {
+      to_email: email,
+      otp_code: _otpCode
+    });
+    btn.disabled = false;
+    btn.textContent = 'Verify Code';
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    document.getElementById('otpError').textContent = 'Could not send code — please try again';
+    btn.disabled = false;
+    btn.textContent = 'Verify Code';
+  }
+}
+
+function initOtpBoxes() {
+  // Replace nodes to clear old listeners
+  const old = Array.from(document.querySelectorAll('.otp-box'));
+  old.forEach(b => { const f = b.cloneNode(true); b.parentNode.replaceChild(f, b); });
+
+  const boxes = Array.from(document.querySelectorAll('.otp-box'));
+  boxes.forEach((box, i) => {
+    box.addEventListener('input', () => {
+      box.value = box.value.replace(/\D/, '').slice(-1);
+      box.classList.toggle('filled', !!box.value);
+      if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
+    });
+    box.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
+    });
+    box.addEventListener('paste', e => {
+      e.preventDefault();
+      const digits = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+      boxes.forEach((b, j) => { b.value = digits[j] || ''; b.classList.toggle('filled', !!b.value); });
+      boxes[Math.min(digits.length, boxes.length - 1)].focus();
+    });
+  });
+}
+
+function submitOtp() {
+  const entered = Array.from(document.querySelectorAll('.otp-box')).map(b => b.value).join('');
+  if (entered.length < 6) {
+    document.getElementById('otpError').textContent = 'Please enter all 6 digits';
+    return;
+  }
+  if (Date.now() > _otpExpiry) {
+    document.getElementById('otpError').textContent = 'Code expired — click Resend';
+    return;
+  }
+  if (entered !== _otpCode) {
+    document.getElementById('otpError').textContent = 'Incorrect code — please try again';
+    // Shake the boxes
+    document.getElementById('otpBoxes').classList.add('shake');
+    setTimeout(() => document.getElementById('otpBoxes').classList.remove('shake'), 500);
+    return;
+  }
+
+  // Verified
+  setFieldState('coEmail', 'valid', '✓ Email verified');
+  document.getElementById('checkoutOtp').style.display = 'none';
+  proceedToPayment();
+}
+
+async function resendOtp() {
+  const resendBtn = document.getElementById('otpResendBtn');
+  resendBtn.style.opacity = '0.5';
+  resendBtn.style.pointerEvents = 'none';
+  document.getElementById('otpError').textContent = '';
+
+  _otpCode   = String(Math.floor(100000 + Math.random() * 900000));
+  _otpExpiry = Date.now() + 10 * 60 * 1000;
+
+  try {
+    const ejs = STORE.emailjs;
+    await emailjs.send(ejs.serviceId, ejs.templateId, {
+      to_email: _otpEmail,
+      otp_code: _otpCode
+    });
+    showToast('New code sent!');
+    const boxes = document.querySelectorAll('.otp-box');
+    boxes.forEach(b => { b.value = ''; b.classList.remove('filled'); });
+    boxes[0]?.focus();
+  } catch (err) {
+    document.getElementById('otpError').textContent = 'Failed to resend — please try again';
+  }
+
+  setTimeout(() => {
+    resendBtn.style.opacity = '';
+    resendBtn.style.pointerEvents = '';
+  }, 30000);
+}
+
+function proceedToPayment() {
+  const customer = {
+    name:     document.getElementById('coName').value.trim(),
+    address:  document.getElementById('coAddress').value.trim(),
+    city:     document.getElementById('coCity').value.trim(),
+    postcode: document.getElementById('coPostcode').value.trim(),
+  };
+  const recapEl = document.getElementById('coRecap');
+  if (recapEl) {
+    recapEl.innerHTML = `
+      <div class="co-recap-row">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>${customer.name}</span>
+      </div>
+      <div class="co-recap-row">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>${customer.address}, ${customer.city}, ${customer.postcode}</span>
+      </div>
+      <div class="co-recap-row co-recap-total">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Order Total: £${cartTotal().toFixed(2)} — FREE delivery</span>
+      </div>`;
+  }
+  goToStep(3);
 }
 
 function loadPayPal() {
@@ -848,7 +1235,8 @@ function loadPayPal() {
           if (badge) badge.textContent = '✓ PayPal Payment Approved';
           const refEl = document.getElementById('successOrderRef');
           if (refEl) refEl.textContent = `Order Ref: ${msg.ref}`;
-          document.getElementById('checkoutFormView').style.display = 'none';
+          [1,2,3].forEach(i => { const s = document.getElementById(`checkoutStep${i}`); if (s) s.style.display = 'none'; });
+          document.getElementById('checkoutStepper')?.style && (document.querySelector('.checkout-stepper').style.display = 'none');
           document.getElementById('checkoutSuccess').classList.add('show');
         });
       },
@@ -969,7 +1357,10 @@ function initStripeElement() {
     const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: cardNumber,
-        billing_details: { name: customer.name, email: customer.email }
+        billing_details: {
+            name:  document.getElementById('cardHolderName')?.value.trim() || customer.name,
+            email: customer.email
+          }
       }
     });
 
@@ -990,7 +1381,8 @@ function initStripeElement() {
       if (badge) badge.textContent = '✓ Card Payment Approved';
       const refEl = document.getElementById('successOrderRef');
       if (refEl) refEl.textContent = `Order Ref: ${msg.ref}`;
-      document.getElementById('checkoutFormView').style.display = 'none';
+      [1,2,3].forEach(i => { const s = document.getElementById(`checkoutStep${i}`); if (s) s.style.display = 'none'; });
+      document.querySelector('.checkout-stepper').style.display = 'none';
       document.getElementById('checkoutSuccess').classList.add('show');
     }
   });
@@ -1003,12 +1395,11 @@ function selectPayment(method) {
   });
 
   // Highlight selected label, reset others
-  const labels = { card: 'pmLabelCard', paypal: 'pmLabelPaypal' };
-  Object.entries(labels).forEach(([m, id]) => {
+  ['pmLabelCard','pmLabelPaypal'].forEach(id => {
     const lbl = document.getElementById(id);
     if (!lbl) return;
-    lbl.style.borderColor = m === method ? 'var(--oak)' : 'var(--border)';
-    lbl.style.background  = m === method ? '#faf7f2' : '';
+    const m = lbl.querySelector('input')?.value;
+    lbl.classList.toggle('selected', m === method);
   });
 
   // Show matching content panel, hide others
@@ -1040,18 +1431,18 @@ function openCheckoutModal() {
     </div>`).join('');
   document.getElementById('coTotal').textContent = `£${cartTotal().toFixed(2)}`;
 
-  // Reset views
-  document.getElementById('checkoutFormView').style.display = '';
+  // Reset to step 1
+  goToStep(1);
   document.getElementById('checkoutSuccess').classList.remove('show');
 
-  // Reset payment selection so user picks fresh each time
+  // Reset payment selection
   ['pmContentCard','pmContentPaypal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
   ['pmLabelCard','pmLabelPaypal'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) { el.style.borderColor = 'var(--border)'; el.style.background = ''; }
+    if (el) el.classList.remove('selected');
   });
   document.querySelectorAll('input[name="paymentMethod"]').forEach(r => r.checked = false);
 
@@ -1067,29 +1458,27 @@ function closeCheckoutModal() {
 }
 
 function validateCheckoutForm() {
-  const fields = ['coName','coEmail','coPhone','coCity','coAddress','coPostcode'];
+  const rules = {
+    coName:     { validate: v => v.trim().length >= 2,                                        err: 'Please enter your full name' },
+    coEmail:    { validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),                err: 'Enter a valid email e.g. john@example.com' },
+    coPhone:    { validate: v => { const d = v.replace(/\D/g,''); return d.length >= 7 && d.length <= 15; }, err: 'Enter a valid phone number (7–15 digits)' },
+    coCity:     { validate: v => v.trim().length >= 2,                                        err: 'Please enter your city' },
+    coAddress:  { validate: v => v.trim().length >= 5,                                        err: 'Please enter your full delivery address' },
+    coPostcode: { validate: v => v.trim().length >= 3,                                        err: 'Please enter a valid postcode' }
+  };
+
   let valid = true;
-  fields.forEach(id => {
+  Object.entries(rules).forEach(([id, rule]) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.classList.remove('error');
-    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+    const v = el.value;
+    if (!v || !rule.validate(v)) {
+      setFieldState(id, 'error', v ? rule.err : 'This field is required');
+      valid = false;
+    } else {
+      setFieldState(id, 'valid');
+    }
   });
-
-  // Email format check
-  const emailEl = document.getElementById('coEmail');
-  if (emailEl && emailEl.value.trim()) {
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim());
-    if (!emailOk) { emailEl.classList.add('error'); valid = false; }
-  }
-
-  // Phone: must be 7–15 digits (allows +, spaces, dashes, parens)
-  const phoneEl = document.getElementById('coPhone');
-  if (phoneEl && phoneEl.value.trim()) {
-    const digits = phoneEl.value.replace(/\D/g, '');
-    if (digits.length < 7 || digits.length > 15) { phoneEl.classList.add('error'); valid = false; }
-  }
-
   return valid;
 }
 
