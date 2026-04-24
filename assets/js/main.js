@@ -978,10 +978,7 @@ function goToStep(n) {
 
 async function checkoutNext(fromStep) {
   if (fromStep === 2) {
-    if (!validateCheckoutForm()) {
-      showToast('Please fill in all required fields');
-      return;
-    }
+    if (!validateCheckoutForm()) return;
     // Trigger OTP verification for email + phone
     await startOtpVerification();
     return;
@@ -1459,27 +1456,67 @@ function closeCheckoutModal() {
 
 function validateCheckoutForm() {
   const rules = {
-    coName:     { validate: v => v.trim().length >= 2,                                        err: 'Please enter your full name' },
-    coEmail:    { validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),                err: 'Enter a valid email e.g. john@example.com' },
-    coPhone:    { validate: v => { const d = v.replace(/\D/g,''); return d.length >= 7 && d.length <= 15; }, err: 'Enter a valid phone number (7–15 digits)' },
-    coCity:     { validate: v => v.trim().length >= 2,                                        err: 'Please enter your city' },
-    coAddress:  { validate: v => v.trim().length >= 5,                                        err: 'Please enter your full delivery address' },
-    coPostcode: { validate: v => v.trim().length >= 3,                                        err: 'Please enter a valid postcode' }
+    coName:     { label: 'Full Name',         validate: v => v.trim().length >= 2,                                                    err: 'Full name must be at least 2 characters' },
+    coEmail:    { label: 'Email Address',     validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),                            err: 'Enter a valid email — e.g. john@example.com' },
+    coPhone:    { label: 'Phone / WhatsApp',  validate: v => { const d = v.replace(/\D/g,''); return d.length >= 7 && d.length <= 15; }, err: 'Phone must be 7–15 digits' },
+    coCity:     { label: 'City',              validate: v => v.trim().length >= 2,                                                    err: 'Please enter your city' },
+    coAddress:  { label: 'Delivery Address',  validate: v => v.trim().length >= 5,                                                    err: 'Please enter your full delivery address' },
+    coPostcode: { label: 'Postcode',          validate: v => v.trim().length >= 3,                                                    err: 'Please enter a valid postcode' }
   };
 
-  let valid = true;
+  const errors = [];
+  let firstInvalidEl = null;
+
   Object.entries(rules).forEach(([id, rule]) => {
     const el = document.getElementById(id);
     if (!el) return;
     const v = el.value;
     if (!v || !rule.validate(v)) {
-      setFieldState(id, 'error', v ? rule.err : 'This field is required');
-      valid = false;
+      const msg = !v ? `${rule.label} is required` : rule.err;
+      setFieldState(id, 'error', msg);
+      errors.push(msg);
+      if (!firstInvalidEl) firstInvalidEl = el;
     } else {
       setFieldState(id, 'valid');
     }
   });
-  return valid;
+
+  if (errors.length > 0) {
+    showFormErrorPopup(errors);
+    firstInvalidEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    firstInvalidEl?.focus();
+    return false;
+  }
+  return true;
+}
+
+function showFormErrorPopup(errors) {
+  // Remove any existing popup
+  document.getElementById('formErrorPopup')?.remove();
+
+  const popup = document.createElement('div');
+  popup.id = 'formErrorPopup';
+  popup.className = 'form-error-popup';
+  popup.innerHTML = `
+    <div class="form-error-popup-inner">
+      <div class="form-error-header">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>Please fix the following:</span>
+        <button class="form-error-close" onclick="document.getElementById('formErrorPopup').remove()">&times;</button>
+      </div>
+      <ul class="form-error-list">
+        ${errors.map(e => `<li>${e}</li>`).join('')}
+      </ul>
+    </div>`;
+
+  // Insert at top of step 2 body
+  const body = document.querySelector('#checkoutStep2 .checkout-modal-body');
+  if (body) body.insertBefore(popup, body.firstChild);
+
+  // Auto-dismiss after 6s
+  setTimeout(() => popup.remove(), 6000);
 }
 
 function formatOrderMessage(customer, paymentMethod) {
