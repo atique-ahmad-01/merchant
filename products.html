@@ -142,12 +142,12 @@
       <div class="shop-header">
         <div>
           <div class="filter-tabs">
-            <button class="filter-tab active" data-category="all">All (24)</button>
-            <button class="filter-tab" data-category="furniture">Furniture (2)</button>
-            <button class="filter-tab" data-category="shelves">Shelves (13)</button>
-            <button class="filter-tab" data-category="bathroom">Bathroom (9)</button>
+            <button class="filter-tab active" data-category="all">All (40)</button>
+            <button class="filter-tab" data-category="furniture">Furniture (14)</button>
+            <button class="filter-tab" data-category="shelves">Shelves (15)</button>
+            <button class="filter-tab" data-category="bathroom">Bathroom (11)</button>
           </div>
-          <div class="shop-count" id="productCount">Showing 24 products</div>
+          <div class="shop-count" id="productCount">Showing 40 products</div>
         </div>
         <div>
           <select id="sortSelect" style="padding:10px 16px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:13px;outline:none;cursor:pointer;background:var(--white);">
@@ -268,13 +268,16 @@
 </a>
 <script src="assets/js/main.js"></script>
 <script>
-  // Pre-filter by URL param
+  // Pre-filter by URL param; update count on load
   window.addEventListener('load', () => {
     const cat = new URLSearchParams(location.search).get('cat');
     if (cat) {
       const tab = document.querySelector(`.filter-tab[data-category="${cat}"]`);
-      if (tab) tab.click();
+      if (tab) { tab.click(); return; }
     }
+    // No filter — show total count dynamically
+    const countEl = document.getElementById('productCount');
+    if (countEl) countEl.textContent = `Showing ${PRODUCTS.length} products`;
   });
 </script>
 </body>
